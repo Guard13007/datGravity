@@ -21,6 +21,10 @@
 
 			//tmp for testing
 			this.bodies=[];
+			//this.bodies[0]=new Body(70,[255,0,0,0.5],'star');
+			//this.bodies[1]=new Body(4,[0,255,0,0.5],'planet',200);
+			//this.bodies[2]=new Body(1,[0,255,255,0.8],'asteroid thing',500);
+			//physics.setOrbit(this.bodies[0],this.bodies[1]);
 			this.bodies[0]=new Body(200,[255,0,0,0.5],'alpha');
 			this.bodies[1]=new Body(10,[0,0,255,1],'bravo',10000,1e27);
 			this.bodies[2]=new Body(0,[255,255,0,1],'I HAVE A NAME!!',29,3000);
@@ -43,7 +47,6 @@
 					sys.context.fillStyle='rgba('+b.color[0]+','+b.color[1]+','+b.color[2]+','+b.color[3]+')';
 					sys.context.fill();
 				});
-				setTimeout(this.loop,this.iterationDelay);
 			}
 		};
 		var Body=function(radius,color,name,x,y){
@@ -96,7 +99,9 @@
 				}
 			},1000);
 			//And finally, START
-			sys.loop();
+			//sys.loop();
+			//setTimeout(this.loop.call(this),this.iterationDelay);
+			setInterval(sys.loop,sys.iterationDelay);
 		}
 	</script>
 	<canvas id="canvas"></canvas>

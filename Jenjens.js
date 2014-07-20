@@ -755,7 +755,7 @@ function getPeriapsis(parent,child) {return 2*getSemiMajorAxis(parent,child)-get
 	}
 };
 //temp
-window.onload=function(){
+/*window.onload=function(){
 	Jenjens.render.canvas[0]=document.createElement('canvas');
 	Jenjens.render.context[0]=Jenjens.render.canvas[0].getContext('2d');
 	//document.body.appendChild(Jenjens.render.canvas[0]);
@@ -763,4 +763,4 @@ window.onload=function(){
 	Jenjens.render.canvas[0].width=window.innerWidth;
 	Jenjens.render.canvas[0].height=window.innerHeight;
 	Jenjens.io.addEvent('click',Jenjens.debug.showClicks);
-}
+}*/

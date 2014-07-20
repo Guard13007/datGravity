@@ -12,6 +12,10 @@
 </head>
 <body>
 	<script>
+		//Redefine constants
+		physics.G=0.5;
+		physics.timeStep=0.5;
+
 		var System=function(){
 			//render settings
 			this.iterationDelay=100;
@@ -26,8 +30,10 @@
 			//this.bodies[2]=new Body(1,[0,255,255,0.8],'asteroid thing',500);
 			//physics.setOrbit(this.bodies[0],this.bodies[1]);
 			this.bodies[0]=new Body(200,[255,0,0,0.5],'alpha');
-			this.bodies[1]=new Body(10,[0,0,255,1],'bravo',10000,1e27);
-			this.bodies[2]=new Body(0,[255,255,0,1],'I HAVE A NAME!!',29,3000);
+			this.bodies[1]=new Body(10,[0,0,255,1],'bravo',200,567);
+			this.bodies[2]=new Body(0,[255,255,0,1],'I HAVE A NAME!!',29,300);
+			physics.setOrbit(this.bodies[0],this.bodies[1]);
+			physics.setOrbit(this.bodies[0],this.bodies[2]);
 
 			//get canvas
 			this.canvas=document.getElementById('canvas');
@@ -40,13 +46,26 @@
 			};
 			this.loop=function(){
 				forEachCompare(this.bodies,function(a,b){physics.applyGravity(a,b);});
-				forEach(this.bodies,function(b){physics.updateLocation(b);});
+				//clear
+				if (this.fade) {
+					sys.context.fillStyle='rgba(0,0,0,'+this.fadeAlpha+')';
+					sys.context.fillRect(0,0,sys.canvas.width,sys.canvas.height);
+				} else {
+					sys.context.clearRect(0,0,sys.canvas.width,sys.canvas.height);
+				}
 				forEach(this.bodies,function(b){
+					physics.updateLocation(b);
+
+					//draw
 					sys.context.beginPath();
 					sys.context.arc(b.x,b.y,b.radius,0,Math.Tau);
 					sys.context.fillStyle='rgba('+b.color[0]+','+b.color[1]+','+b.color[2]+','+b.color[3]+')';
 					sys.context.fill();
 				});
+				//setTimeout(this.loop.call(this),this.iterationDelay);
+				//setTimeout(this.loop,this.iterationDelay);
+				setTimeout("sys.loop.call(sys)",sys.iterationDelay);
+				//setTimeout(sys.loop,sys.iterationDelay);
 			}
 		};
 		var Body=function(radius,color,name,x,y){
@@ -66,6 +85,11 @@
 			/*var*/ sys=new System();
 			/*var*/ gui=new dat.GUI();
 			gui.add(sys,'generateNewSystem');
+
+			//Physics Settings
+			var f0=gui.addFolder('Physics Settings');
+			f0.add(physics,'G');
+			f0.add(physics,'timeStep');
 
 			//Render Settings
 			var f1=gui.addFolder('Render Settings');
@@ -99,9 +123,9 @@
 				}
 			},1000);
 			//And finally, START
-			//sys.loop();
+			sys.loop();
 			//setTimeout(this.loop.call(this),this.iterationDelay);
-			setInterval(sys.loop,sys.iterationDelay);
+			//setInterval(sys.loop,sys.iterationDelay);
 		}
 	</script>
 	<canvas id="canvas"></canvas>

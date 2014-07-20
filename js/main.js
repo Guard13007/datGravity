@@ -2,18 +2,8 @@
 physics.G=0.4;
 physics.timeStep=0.1;
 
-//tmp IO thing
-var keysHeld=[];
 //temp player object stuff
-var player={
-	x:250,
-	y:0,
-	color:[255,255,0,1],
-	width:4,
-	height:8,
-	mass:1,
-	v:new physics.vector()
-};
+var player=new Ship(250,0,4,8);
 function playerMove(){
 	if (keysHeld[87]) //W
 		player.v.y-=1;
@@ -35,7 +25,7 @@ function playerMove(){
 		var x=(player.x-player.x)*sys.scale-player.width/2+sys.canvas.width/2;
 		var y=(player.y-player.y)*sys.scale-player.height/2+sys.canvas.height/2;
 	}
-	sys.context.fillRect(x,y,player.width,player.height);
+	sys.context.fillRect(x-player.width/2*sys.scale,y-player.height/2*sys.scale,player.width*sys.scale,player.height*sys.scale);
 }
 
 var System=function(){
@@ -58,9 +48,9 @@ var System=function(){
 	//this.bodies[1]=new Body(4,[0,255,0,0.5],'planet',200);
 	//this.bodies[2]=new Body(1,[0,255,255,0.8],'asteroid thing',500);
 	//physics.setOrbit(this.bodies[0],this.bodies[1]);
-	this.bodies[0]=new Body(200,[255,0,0,0.5],'alpha');
-	this.bodies[1]=new Body(10,[0,0,255,1],'bravo',200,567);
-	this.bodies[2]=new Body(0,[255,255,0,1],'I HAVE A NAME!!',29,300);
+	this.bodies[0]=new Planetoid(200,[255,0,0,0.5],'alpha');
+	this.bodies[1]=new Planetoid(10,[0,0,255,1],'bravo',200,567);
+	this.bodies[2]=new Planetoid(0,[255,255,0,1],'I HAVE A NAME!!',29,300);
 	physics.setOrbit(this.bodies[0],this.bodies[1]);
 	physics.setOrbit(this.bodies[0],this.bodies[2]);
 	//PLAYER THING
@@ -84,7 +74,7 @@ var System=function(){
 			//generate direction and magnitude
 			var d=random.number(0,Math.Tau);
 			var m=random.number(0,sys.canvas.width*2);
-			var b=new Body(random.number(0.01,1.3),
+			var b=new Planetoid(random.number(0.01,1.3),
 				[c,c,c,1],'a',Math.cos(d)*m,Math.sin(d)*m);
 			physics.setOrbit(sys.bodies[0],b);
 			sys.bodies.push(b);
@@ -149,37 +139,12 @@ var System=function(){
 	}
 };
 
-var Body=function(radius,color,name,x,y){
-	Circle.call(this,radius,x,y,color);
-	this.v=new physics.vector();
-
-	radius? this.radius=radius : this.radius=1;
-	//color? this.color=color : this.color=[1,1,1,1];
-	name? this.name=name : this.name='unnamed';
-	//x? this.x=x : this.x=0;
-	//y? this.y=y : this.y=0;
-	this.mass=Math.pow(this.radius,2.7);
-};
-
 window.onload=function(){
 	//Create the System & GUI
 	/*var*/ sys=new System();
 	/*var*/ gui=new dat.GUI();
 	gui.add(sys,'generateNewSystem');
 	gui.add(sys,'generateAsteroids');
-
-	//THIS IS DUMB THAT IS HAS TO BE HERE
-//tmp IO stuff
-window.addEventListener('keydown',function(event){
-	var code=event.keyCode? event.keyCode : event.charCode;
-	keysHeld[code]=true;
-	//console.log(code);
-},false);
-window.addEventListener('keyup',function(event){
-	var code=event.keyCode? event.keyCode : event.charCode;
-	keysHeld[code]=false;
-},false);
-	//END DUMB PART
 
 	//Physics Settings
 	var f0=gui.addFolder('Physics Settings');
@@ -198,6 +163,7 @@ window.addEventListener('keyup',function(event){
 
 	//Bodies
 	var f2=gui.addFolder('Bodies');
+	//f2=new dat.GUI();
 	var a=[];
 	forEach(sys.bodies,function(b){
 		a.push(f2.addFolder(b.name));

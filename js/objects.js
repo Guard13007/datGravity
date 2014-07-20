@@ -1,0 +1,33 @@
+var Body=function(color,name,x,y,rotationSpeed){
+	this.v=new physics.vector;
+
+	color? this.color=color : this.color=[1,1,1,1];
+	name? this.name=name : this.name='unnamed';
+
+	x? this.x=x : this.x=0;
+	y? this.y=y : this.y=0;
+	rotationSpeed? this.rotationSpeed=rotationSpeed : this.rotationSpeed=0;
+	rotation=0;
+};
+
+var Planetoid=function(radius,color,name,x,y,rotationSpeed){
+	Body.call(this,color,name,x,y,rotationSpeed);
+
+	radius? this.radius=radius : this.radius=1;
+	this.mass=Math.pow(this.radius,2.7);
+};
+
+var Ship=function(x,y,width,height,rotation){
+	//right now just makes rectanlge "fuel tank" to be reused later
+	//color is temporary value, yellow, should be shade of grey probably
+	Body.call(this,[255,255,0,1],'fuel tank',x,y);
+
+	width? this.width=width : this.width=1;
+	height? this.height=height : this.height=1;
+	this.mass=0.141*this.width*this.height; //density of liq oxy, 1.141g/cm^3
+	rotation? this.rotation=rotation : this.rotation=0;
+};
+/*
+4.512 * 0.9 = 4.0608
+4.512 * 0.1 = 0.4512
+*/

@@ -1,33 +1,40 @@
 //Redefine constants
-physics.G=0.5;
-physics.timeStep=0.5;
+physics.G=0.4;
+physics.timeStep=0.1;
 
-//temp IO and player object stuff
+//tmp IO thing
 var keysHeld=[];
-window.onKeyDown=function(event){
-	var code=event.keyCode? event.keyCode : event.charCode;
-	keysHeld[code]=true;
-};
-window.onKeyUp=function(event){
-	var code=event.keyCode? event.keyCode : event.charCode;
-	keysHeld[code]=false;
-};
+//temp player object stuff
 var player={
-	x:0,
+	x:250,
 	y:0,
 	color:[255,255,0,1],
 	width:4,
-	height:4,
+	height:8,
 	mass:1,
 	v:new physics.vector()
 };
 function playerMove(){
+	if (keysHeld[87]) //W
+		player.v.y-=1;
+	if (keysHeld[65]) //A
+		player.v.x-=1;
+	if (keysHeld[83]) //S
+		player.v.y+=1;
+	if (keysHeld[68]) //D
+		player.v.x+=1;
 	forEach(sys.bodies,function(b){physics.applyGravity(player,b);});
 	physics.updateLocation(player);
 	sys.context.beginPath();
 	sys.context.fillStyle='rgba('+player.color[0]+','+player.color[1]+','+player.color[2]+','+player.color[3]+')';
-	var x=(player.x-sys.bodies[sys.focusID].x)*sys.scale-player.width/2+sys.canvas.width/2;
-	var y=(player.y-sys.bodies[sys.focusID].y)*sys.scale-player.height/2+sys.canvas.height/2;
+	if (sys.focusType=='body'){
+		var x=(player.x-sys.bodies[sys.focusID].x)*sys.scale-player.width/2+sys.canvas.width/2;
+		var y=(player.y-sys.bodies[sys.focusID].y)*sys.scale-player.height/2+sys.canvas.height/2;
+	} else if (sys.focusType=='ship'){
+		//tmp just uses player position, later array
+		var x=(player.x-player.x)*sys.scale-player.width/2+sys.canvas.width/2;
+		var y=(player.y-player.y)*sys.scale-player.height/2+sys.canvas.height/2;
+	}
 	sys.context.fillRect(x,y,player.width,player.height);
 }
 
@@ -36,14 +43,14 @@ var System=function(){
 	this.iterationDelay=33;
 	this.renderType='normal';
 	this.fade=false;
-	this.fadeAlpha=0.05;
+	this.fadeAlpha=0.03;
 	/*this.focus={
 		type:'body',
 		id:0
 	};*/
-	this.focusType='body';
+	this.focusType='ship';
 	this.focusID=0;
-	this.scale=1;
+	this.scale=0.8;
 
 	//tmp for testing
 	this.bodies=[];
@@ -56,6 +63,8 @@ var System=function(){
 	this.bodies[2]=new Body(0,[255,255,0,1],'I HAVE A NAME!!',29,300);
 	physics.setOrbit(this.bodies[0],this.bodies[1]);
 	physics.setOrbit(this.bodies[0],this.bodies[2]);
+	//PLAYER THING
+	physics.setOrbit(this.bodies[0],player);
 
 	//get canvas
 	this.canvas=document.getElementById('canvas');
@@ -121,6 +130,10 @@ var System=function(){
 			if (sys.focusType=='body'){
 				var x=(b.x-sys.bodies[sys.focusID].x)*sys.scale+sys.canvas.width/2;
 				var y=(b.y-sys.bodies[sys.focusID].y)*sys.scale+sys.canvas.height/2;
+			} else if (sys.focusType=='ship'){
+				//tmp just player, later will be ships array
+				var x=(b.x-player.x)*sys.scale+sys.canvas.width/2;
+				var y=(b.y-player.y)*sys.scale+sys.canvas.height/2;
 			}
 			var r=b.radius*sys.scale; if (r<0.5) r=1;
 			sys.context.arc(x,y,r,0,Math.Tau);
@@ -128,13 +141,14 @@ var System=function(){
 			sys.context.fill();
 		});
 		//PLAYER THING
-		//playerMove();
+		playerMove();
 		//setTimeout(this.loop.call(this),this.iterationDelay);
 		//setTimeout(this.loop,this.iterationDelay);
 		setTimeout("sys.loop.call(sys)",sys.iterationDelay);
 		//setTimeout(sys.loop,sys.iterationDelay);
 	}
 };
+
 var Body=function(radius,color,name,x,y){
 	Circle.call(this,radius,x,y,color);
 	this.v=new physics.vector();
@@ -154,10 +168,23 @@ window.onload=function(){
 	gui.add(sys,'generateNewSystem');
 	gui.add(sys,'generateAsteroids');
 
+	//THIS IS DUMB THAT IS HAS TO BE HERE
+//tmp IO stuff
+window.addEventListener('keydown',function(event){
+	var code=event.keyCode? event.keyCode : event.charCode;
+	keysHeld[code]=true;
+	//console.log(code);
+},false);
+window.addEventListener('keyup',function(event){
+	var code=event.keyCode? event.keyCode : event.charCode;
+	keysHeld[code]=false;
+},false);
+	//END DUMB PART
+
 	//Physics Settings
 	var f0=gui.addFolder('Physics Settings');
-	f0.add(physics,'G');
-	f0.add(physics,'timeStep');
+	f0.add(physics,'G',0.1,1).step(0.1);
+	f0.add(physics,'timeStep',0.1,1).step(0.1);
 
 	//Render Settings
 	var f1=gui.addFolder('Render Settings');
@@ -167,7 +194,7 @@ window.onload=function(){
 	f1.add(sys,'fadeAlpha',0.01,1).step(0.01);
 	f1.add(sys,'focusType',['body','ship']);
 	f1.add(sys,'focusID');
-	f1.add(sys,'scale');
+	f1.add(sys,'scale',0.01,10);
 
 	//Bodies
 	var f2=gui.addFolder('Bodies');

@@ -1,4 +1,4 @@
 datGravity
 ==========
 
-Redoi
+Redoing gravity simulator from scratch using Jenjens and dat.GUI

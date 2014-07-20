@@ -490,6 +490,12 @@ var Jenjens={
 				o.y+=o.v.y*Jenjens.physics.timeStep;
 			}
 		},
+		radialCollision:function(a,b){
+			var x=a.x-b.x;	var y=a.y-b.y;
+			var D=Math.sqrt(x*x+y*y);
+			if (D<a.radius+b.radius) return true;
+			return false;
+		},
 		/* MORE PHYSICS STUFF TO ADD
 function getOrbitalVelocity(parent,child) {
 	if (child.x!=undefined) {
@@ -575,6 +581,8 @@ function getPeriapsis(parent,child) {return 2*getSemiMajorAxis(parent,child)-get
 		}
 	},
 	random:{
+		number:function(min,max){return Math.random()*(max-min)+min;},
+		integer:function(min,max){return Math.floor(Math.random()*(max-min+1))+min;},
 		color:"temp value"
 		//number, integer, color, name
 	},

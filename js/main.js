@@ -1,3 +1,29 @@
+var Game={
+	generateNewSystem:function(){
+		//make this dammit!
+	},
+	generateAsteroids:function(){
+		var r=random.integer(1,5);			//how many
+		for (var i=0;i<r;i++){
+			var c=random.integer(21,169);	//color
+			//gen direction and magnitude
+			var d=random.number(0,Math.Tau);
+			var m=random.number(0,sys.canvas.width*2);
+			//temp values, really should be like 0.5 to 40
+			var b=new Planetoid(random.number(0.01,1.3),
+				[c,c,c,1],'a',Math.cos(d)*m,Math.sin(d)*m);
+			physics.setOrbit(sys.bodies[0],b);
+			sys.bodies.push(b);
+			//the newly created object needs to be added to the dat.GUI
+			//call a gui.js function if available
+			//gui.js should be removable!!
+		}
+	}
+};
+
+
+
+//OLD
 //temp player object stuff
 var player=new Ship(250,0,4,8);
 function playerMove(){
@@ -49,25 +75,6 @@ var System=function(){
 	this.canvas.width=window.innerWidth;
 	this.canvas.height=window.innerHeight;
 	this.context=this.canvas.getContext('2d');
-
-	this.generateNewSystem=function(){
-		//generates new bodies
-	};
-
-	this.generateAsteroids=function(){
-		var r=random.integer(1,5);
-		for (var i=0;i<r;i++){
-			//temp values, reality should be like 0.5 to 40
-			var c=random.integer(21,169);
-			//generate direction and magnitude
-			var d=random.number(0,Math.Tau);
-			var m=random.number(0,sys.canvas.width*2);
-			var b=new Planetoid(random.number(0.01,1.3),
-				[c,c,c,1],'a',Math.cos(d)*m,Math.sin(d)*m);
-			physics.setOrbit(sys.bodies[0],b);
-			sys.bodies.push(b);
-		}
-	};
 
 	this.loop=function(){
 		forEachCompare(this.bodies,function(a,b){physics.applyGravity(a,b);});
@@ -131,50 +138,14 @@ var System=function(){
 window.onload=function(){
 	//Create the System & GUI
 	/*var*/ sys=new System();
-	/*var*/ gui=new dat.GUI();
-	gui.add(sys,'generateNewSystem');
-	gui.add(sys,'generateAsteroids');
-
-	//Physics Settings
-	var f0=gui.addFolder('Physics Settings');
-	f0.add(physics,'G',0.1,1).step(0.1);
-	f0.add(physics,'timeStep',0.1,1).step(0.1);
-
-	//Render Settings
-	var f1=gui.addFolder('Render Settings');
-	f1.add(sys,'iterationDelay',{Max:1,fps_60:16,fps_30:33,fps_10:100,Min:2000});
-	f1.add(sys,'renderType',{normal:'normal',pseudo_3D:'3D',sideView:'side'});
-	f1.add(sys,'fade');
-	f1.add(sys,'fadeAlpha',0.01,1).step(0.01);
-	f1.add(sys,'focusType',['body','ship']);
-	f1.add(sys,'focusID');
-	f1.add(sys,'scale',0.01,10);
-
-	//Bodies
-	var f2=gui.addFolder('Bodies');
-	//f2=new dat.GUI();
-	var a=[];
-	forEach(sys.bodies,function(b){
-		a.push(f2.addFolder(b.name));
-		a[a.length-1].add(b,'name');
-		a[a.length-1].addColor(b,'color');
-		a[a.length-1].add(b,'mass');
-		a[a.length-1].add(b,'radius');
-		a[a.length-1].add(b,'x');
-		a[a.length-1].add(b,'y');
-		a.push(a[a.length-1].addFolder('Velocity'));
-		a[a.length-1].add(b.v,'x');
-		a[a.length-1].add(b.v,'y');
-	});
-
-	gui.remember(sys); //bugged?
+	/*var*/ //gui=new dat.GUI();
 
 	//update dat.GUI elements every second
-	setInterval(function(){
+	/*setInterval(function(){
 		for (var i in gui.__controllers){
 			gui.__controllers[i].updateDisplay();
 		}
-	},1000);
+	},1000);*/
 	//And finally, START
 	sys.loop();
 	//setTimeout(this.loop.call(this),this.iterationDelay);

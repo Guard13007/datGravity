@@ -14,9 +14,7 @@ var Game={
 				[c,c,c,1],'a',Math.cos(d)*m,Math.sin(d)*m);
 			physics.setOrbit(sys.bodies[0],b);
 			sys.bodies.push(b);
-			//the newly created object needs to be added to the dat.GUI
-			//call a gui.js function if available
-			//gui.js should be removable!!
+			if (typeof(GUI!=='undefined')) GUI.addBody(sys.bodies[sys.bodies.length-1]);
 		}
 	}
 };

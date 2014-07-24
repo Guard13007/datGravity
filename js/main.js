@@ -1,18 +1,6 @@
-//Redefine constants
-physics.G=0.4;
-physics.timeStep=0.1;
-
 //temp player object stuff
 var player=new Ship(250,0,4,8);
 function playerMove(){
-	if (keysHeld[87]) //W
-		player.v.y-=1;
-	if (keysHeld[65]) //A
-		player.v.x-=1;
-	if (keysHeld[83]) //S
-		player.v.y+=1;
-	if (keysHeld[68]) //D
-		player.v.x+=1;
 	forEach(sys.bodies,function(b){physics.applyGravity(player,b);});
 	physics.updateLocation(player);
 	sys.context.beginPath();
@@ -131,6 +119,7 @@ var System=function(){
 			sys.context.fill();
 		});
 		//PLAYER THING
+		checkInput();
 		playerMove();
 		//setTimeout(this.loop.call(this),this.iterationDelay);
 		//setTimeout(this.loop,this.iterationDelay);

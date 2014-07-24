@@ -36,13 +36,13 @@ var Render={
 window.addEventListener('load',function(){
 	console.log("Render loaded.");
 	Render.canvas=document.getElementById('canvas');
-	Render.canvas.width=window.innerWidth;
-	Render.canvas.height=window.innerHeight;
+	Render.canvas.width=window.innerWidth-1;
+	Render.canvas.height=window.innerHeight-5;
 	Render.context=Render.canvas.getContext('2d');
 });
 
 //this should be handled differently
 window.onresize=function(){
-	sys.canvas.width=window.innerWidth;
-	sys.canvas.height=window.innerHeight;
+	sys.canvas.width=window.innerWidth-1;
+	sys.canvas.height=window.innerHeight-5;
 }

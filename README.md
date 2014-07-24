@@ -12,15 +12,15 @@ outside of there will cause weird things to happen and/or break.
 ToDo
 ----
 
-[ ] Make Render object actually used for the canvas and its current settings
-[ ] Write GUI.addBody(b)
-[ ] Write Game.generateNewSystem() and actually start using it!
-[ ] Redo System() and sys to split into Systems, Render, Game.
-    (Game.player should be player, Game.system should be current system)
-[ ] Figure out how to load/save/remember settings (and presets) for dat.GUI?
-[ ] Rewrite Bodies portion of GUI (ultimately I want a separate GUI entirely for
-    /a/ Body, and just a way to select them in the main GUI)
-[ ] Redo player controls to rotation and throttle
+- [ ] Make Render object actually used for the canvas and its current settings
+- [ ] Write GUI.addBody(b)
+- [ ] Write Game.generateNewSystem() and actually start using it!
+- [ ] Redo System() and sys to split into Systems, Render, Game.
+      (Game.player should be player, Game.system should be current system)
+- [ ] Figure out how to load/save/remember settings (and presets) for dat.GUI?
+- [ ] Rewrite Bodies portion of GUI (ultimately I want a separate GUI entirely for
+      /a/ Body, and just a way to select them in the main GUI)
+- [ ] Redo player controls to rotation and throttle
 
 Known Bugs
 ----------

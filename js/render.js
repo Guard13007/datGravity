@@ -21,8 +21,8 @@ var Render={
 			var y=(b.y-Game.system.bodies[Render.focusID].y)*Render.scale+Render.canvas.height/2;
 		} else if (Render.focusType=='ship'){
 			//tmp just Game.player object, later will select from array with ID
-			var x=(b.x-Game.player.x)*Render.scale+Render.canvas.width/2;
-			var y=(b.y-Game.player.y)*Render.scale+Render.canvas.height/2;
+			var x=(b.x-Game.system.ships[Render.focusID].x)*Render.scale+Render.canvas.width/2;
+			var y=(b.y-Game.system.ships[Render.focusID].y)*Render.scale+Render.canvas.height/2;
 		}
 		var r=b.radius*Render.scale; if (r<0.5) r=1;
 		Render.context.arc(x,y,r,0,Math.Tau);
@@ -43,6 +43,6 @@ window.addEventListener('load',function(){
 
 //this should be handled differently
 window.onresize=function(){
-	sys.canvas.width=window.innerWidth-1;
-	sys.canvas.height=window.innerHeight-5;
+	Render.canvas.width=window.innerWidth-1;
+	Render.canvas.height=window.innerHeight-5;
 }

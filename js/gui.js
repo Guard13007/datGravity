@@ -1,6 +1,6 @@
 var GUI={
 	load:function(){
-		//check if loaded, else wait 10th of a second
+		//check if everything else loaded, else wait 10th of a second
 		if (typeof(dat)==='undefined' || typeof(Game)==='undefined' || typeof(Render)==='undefined' || typeof(sys)==='undefined') {
 			console.log("GUI not ready.");
 			setTimeout(GUI.load,100);

@@ -13,19 +13,19 @@ window.addEventListener('keyup',function(event){
 
 function checkInput(){
 	if (keysHeld[87]) //W
-		Game.player.v.y-=1;
+		Game.system.ships[0].v.y-=1;
 	if (keysHeld[65]) //A
-		Game.player.v.x-=1;
+		Game.system.ships[0].v.x-=1;
 	if (keysHeld[83]) //S
-		Game.player.v.y+=1;
+		Game.system.ships[0].v.y+=1;
 	if (keysHeld[68]) //D
-		Game.player.v.x+=1;
+		Game.system.ships[0].v.x+=1;
 	if (keysHeld[38]) //Up Arrow
-		Game.player.v.y-=1;
+		Game.system.ships[0].v.y-=1;
 	if (keysHeld[37]) //Left Arrow
-		Game.player.v.x-=1;
+		Game.system.ships[0].v.x-=1;
 	if (keysHeld[40]) //Down Arrow
-		Game.player.v.y+=1;
+		Game.system.ships[0].v.y+=1;
 	if (keysHeld[39]) //Right Arrow
-		Game.player.v.x+=1;
+		Game.system.ships[0].v.x+=1;
 }

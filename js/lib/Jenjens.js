@@ -546,10 +546,14 @@ function getPeriapsis(parent,child) {return 2*getSemiMajorAxis(parent,child)-get
 		//	Jenjens.physics.vector() object
 		//	Methods: add(), subtract(),
 		//	getXcomponent(), getYcomponent(), getMagnitude(), getDirection()
-		vector:function(x,y){
-			//Jenjens.physics.vector()
-			x? this.x=x : this.x=0;
-			y? this.y=y : this.y=0;
+		vector:function(x,y,polar){
+			if (polar) { //x is magnitude, y is direction
+				this.x=Math.cos(y)*x;
+				this.y=Math.sin(y)*x;
+			} else {
+				x? this.x=x : this.x=0;
+				y? this.y=y : this.y=0;
+			}
 			if (x){
 				if (x.x!=undefined){this.x=x.x;this.y=x.y;}
 				//Jenjens.Math.Vector()

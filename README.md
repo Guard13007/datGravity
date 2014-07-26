@@ -21,6 +21,7 @@ ToDo
 - [ ] Rewrite Bodies portion of GUI (ultimately I want a separate GUI entirely for
       /a/ Body, and just a way to select them in the main GUI)
 - [ ] Redo player controls to rotation and throttle
+- [ ] Make dat.GUI custom placed and make canvas full screen
 
 Known Bugs
 ----------

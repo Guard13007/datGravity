@@ -6,12 +6,12 @@ var Game={
 		var r=random.integer(1,5);			//how many
 		for (var i=0;i<r;i++){
 			var c=random.integer(21,169);	//color
-			//gen direction and magnitude
+			//generated up to canvas.width*2 away from center
+			var m=random.number(0,Render.canvas.width*2);
 			var d=random.number(0,Math.Tau);
-			var m=random.number(0,Game.system.canvas.width*2);
-			//temp values, really should be like 0.5 to 40
-			var b=new Planetoid(random.number(0.01,1.3),
-				[c,c,c,1],'a',Math.cos(d)*m,Math.sin(d)*m);
+			//NOTE TO SELF, IF STUFF IS NOT ORBITING 0x0, THIS WILL BE INCORRECT
+			var b=new Planetoid(random.number(0.01,1.3),	//temp values, really should be like 0.5 to 40
+				[c,c,c,1],'asteroid',Math.cos(d)*m,Math.sin(d)*m);
 			physics.setOrbit(Game.system.bodies[0],b);
 			Game.system.bodies.push(b);
 			if (typeof(GUI!=='undefined')) GUI.addBody(Game.system.bodies[Game.system.bodies.length-1]);

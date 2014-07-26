@@ -1,3 +1,9 @@
+console.log("Constructors (objects.js) loading.");
+if (typeof(physics)==='undefined') {
+	console.log("Error loading constructors, physics not loaded.");
+	alert("Error loading physics. Contact Guard13007."); //this is in case this is somehow loaded before Jenjens / Jenjens-alias
+}
+
 var Body=function(color,name,x,y,rotationSpeed){
 	this.v=new physics.vector;
 
@@ -24,10 +30,12 @@ var Ship=function(x,y,width,height,rotation){
 
 	width? this.width=width : this.width=1;
 	height? this.height=height : this.height=1;
-	this.mass=0.141*this.width*this.height; //density of liq oxy, 1.141g/cm^3
+	this.mass=0.141*this.width*this.height; //density of liq oxy is 1.141g/cm^3
 	rotation? this.rotation=rotation : this.rotation=0;
 };
-/*
+/* determine fuel mass based on current tank size/mass and plan accordingly in the future
 4.512 * 0.9 = 4.0608
 4.512 * 0.1 = 0.4512
 */
+
+console.log("Constructors (objects.js) loaded.");

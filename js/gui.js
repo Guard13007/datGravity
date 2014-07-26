@@ -1,3 +1,5 @@
+console.log("GUI loading.");
+
 var GUI={
 	load:function(){
 		//check if everything else loaded, else wait 10th of a second

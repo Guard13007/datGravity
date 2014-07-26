@@ -1,3 +1,5 @@
+console.log("Render loading.");
+
 var Render={
 	iterationDelay:33,
 	renderType:'normal',
@@ -29,16 +31,16 @@ var Render={
 		Render.context.fillStyle='rgba('+b.color[0]+','+b.color[1]+','+b.color[2]+','+b.color[3]+')';
 		Render.context.fill();
 	},
-	canvas:null, //set onload
-	context:null //set onload
+	canvas:null, //set on load
+	context:null //set on load
 };
 
 window.addEventListener('load',function(){
-	console.log("Render loaded.");
 	Render.canvas=document.getElementById('canvas');
 	Render.canvas.width=window.innerWidth-1;
 	Render.canvas.height=window.innerHeight-5;
 	Render.context=Render.canvas.getContext('2d');
+	console.log("Render loaded.");
 });
 
 //this should be handled differently

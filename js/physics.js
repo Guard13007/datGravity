@@ -1,3 +1,9 @@
+console.log("Custom physics loading.");
+if (typeof(physics)==='undefined') {
+	console.log("Error loading physics.");
+	alert("Error loading physics. Contact Guard13007."); //this is in case this is somehow loaded before Jenjens / Jenjens-alias
+}
+
 //Redefine constants
 physics.G=0.4;
 physics.timeStep=0.1;
@@ -24,3 +30,5 @@ physics.combine=function(a,b){
 	a.y=Ly/a.mass;
 	Game.system.bodies.splice(Game.system.bodies.indexOf(b),1);
 };
+
+console.log("Custom physics loaded.");

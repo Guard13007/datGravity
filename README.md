@@ -12,7 +12,7 @@ outside of there will cause weird things to happen and/or break.
 ToDo
 ----
 
-- [ ] Make Render object actually used for the canvas and its current settings
+- [x] Make Render object actually used for the canvas and its current settings
 - [ ] Write GUI.addBody(b)
 - [ ] Write Game.generateNewSystem() and actually start using it!
 - [ ] Redo System() and sys to split into Systems, Render, Game.

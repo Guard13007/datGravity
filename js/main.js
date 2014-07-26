@@ -54,34 +54,34 @@ window.addEventListener('load',function(){
 //temp player object stuff
 //var player=new Ship(250,0,4,8);
 function playerMove(){
-	forEach(Game.system.bodies,function(b){physics.applyGravity(Game.system.ships[0],b);});
-	physics.updateLocation(Game.system.ships[0]);
+	forEach(Game.system.bodies,function(b){physics.applyGravity(Game.system.ships[Render.focusID],b);});
+	physics.updateLocation(Game.system.ships[Render.focusID]);
 	Render.context.beginPath();
-	Render.context.fillStyle='rgba('+Game.system.ships[0].color[0]+','+Game.system.ships[0].color[1]+','+Game.system.ships[0].color[2]+','+Game.system.ships[0].color[3]+')';
+	Render.context.fillStyle='rgba('+Game.system.ships[Render.focusID].color[0]+','+Game.system.ships[Render.focusID].color[1]+','+Game.system.ships[Render.focusID].color[2]+','+Game.system.ships[Render.focusID].color[3]+')';
 	if (Render.focusType=='body'){
-		var x=(Game.system.ships[0].x-Game.system.bodies[Render.focusID].x)*Render.scale-Game.system.ships[0].width/2+Render.canvas.width/2;
-		var y=(Game.system.ships[0].y-Game.system.bodies[Render.focusID].y)*Render.scale-Game.system.ships[0].height/2+Render.canvas.height/2;
+		var x=(Game.system.ships[Render.focusID].x-Game.system.bodies[Render.focusID].x)*Render.scale-Game.system.ships[Render.focusID].width/2+Render.canvas.width/2;
+		var y=(Game.system.ships[Render.focusID].y-Game.system.bodies[Render.focusID].y)*Render.scale-Game.system.ships[Render.focusID].height/2+Render.canvas.height/2;
 	} else if (Render.focusType=='ship'){
-		//tmp just uses Game.system.ships[0] position, later array
-		var x=(Game.system.ships[0].x-Game.system.ships[0].x)*Render.scale-Game.system.ships[0].width/2+Render.canvas.width/2;
-		var y=(Game.system.ships[0].y-Game.system.ships[0].y)*Render.scale-Game.system.ships[0].height/2+Render.canvas.height/2;
+		//tmp just uses Game.system.ships[Render.focusID] position, later array
+		var x=(Game.system.ships[Render.focusID].x-Game.system.ships[Render.focusID].x)*Render.scale-Game.system.ships[Render.focusID].width/2+Render.canvas.width/2;
+		var y=(Game.system.ships[Render.focusID].y-Game.system.ships[Render.focusID].y)*Render.scale-Game.system.ships[Render.focusID].height/2+Render.canvas.height/2;
 	}
-	Render.context.fillRect(x-Game.system.ships[0].width/2*Render.scale,y-Game.system.ships[0].height/2*Render.scale,Game.system.ships[0].width*Render.scale,Game.system.ships[0].height*Render.scale);
+	Render.context.fillRect(x-Game.system.ships[Render.focusID].width/2*Render.scale,y-Game.system.ships[Render.focusID].height/2*Render.scale,Game.system.ships[Render.focusID].width*Render.scale,Game.system.ships[Render.focusID].height*Render.scale);
 }
 
 var System=function(){
 	//render settings
-	this.iterationDelay=33;
-	this.renderType='normal';
-	this.fade=false;
-	this.fadeAlpha=0.03;
+	//this.iterationDelay=33;
+	//this.renderType='normal';
+	//this.fade=false;
+	//this.fadeAlpha=0.03;
 	/*this.focus={
 		type:'body',
 		id:0
 	};*/
-	this.focusType='ship';
-	this.focusID=0;
-	this.scale=0.8;
+	//this.focusType='ship';
+	//this.focusID=0;
+	//this.scale=0.8;
 
 	//tmp for testing
 	this.bodies=[];

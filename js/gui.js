@@ -11,6 +11,10 @@ var GUI={
 		//set up the dat.GUI
 		gui={};
 		gui.main=new dat.GUI();
+		gui.main.remember(Game);
+		gui.main.remember(Render);
+		gui.main.remember(physics);
+		//gui.main.remember(Game.system.bodies);
 
 		//Functions
 		gui.functions=gui.main.addFolder('Functions');
@@ -51,16 +55,6 @@ var GUI={
 			gui.bodyVelocities[gui.bodyVelocities.length-1].add(b.v,'x');
 			gui.bodyVelocities[gui.bodyVelocities.length-1].add(b.v,'y');
 		});
-
-		//gui.main.remember(Game,Render,physics,FUCK THIS WON'T WORK);
-		/*gui.remember(Game);
-		gui.remember(Render);
-		gui.remember(physics);
-		//gui.remember(sys.bodies);
-		forEach(sys.bodies,function(b){
-			gui.remember(b);
-			gui.remember(b.v);
-		});/**/
 	},
 	addBody:function(b){
 		//do stuff!

@@ -2,6 +2,8 @@ var Game={
 	generateNewSystem:function(){
 		//Game.system.ships=[]
 		Game.system=new System(random.integer(13,31)); //system generation should be written so that 23 bodies will average a gas giant, six planets, five moons, and eleven asteroids
+		Game.system.ships[0]=new Ship(250,0,4,8);
+		physics.setOrbit(Game.system.bodies[0],Game.system.ships[0]);
 	},
 	generateAsteroids:function(){
 		var r=random.integer(1,5);			//how many
@@ -41,9 +43,7 @@ var Game={
 
 window.addEventListener('load',function(){
 	Game.generateNewSystem();
-	Game.system.ships[0]=new Ship(250,0,4,8);
 	setTimeout(Game.loop,100); //this has a timer because of loading errors, I need to figure out and fix this
-	physics.setOrbit(Game.system.bodies[0],Game.system.ships[0]);
 });
 //Game.generateNewSystem();
 

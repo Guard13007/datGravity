@@ -1,6 +1,7 @@
 var Game={
 	generateNewSystem:function(){
-		//make this dammit!
+		//Game.system.ships=[]
+		Game.system=new System(random.integer(13,31)); //system generation should be written so that 23 bodies will average a gas giant, six planets, five moons, and eleven asteroids
 	},
 	generateAsteroids:function(){
 		var r=random.integer(1,5);			//how many
@@ -32,10 +33,6 @@ var Game={
 		playerMove();
 		setTimeout(Game.loop,Render.iterationDelay);
 	},
-	//player:new Ship(250,0,4,8),
-	//player:null,
-	//ships:[],
-	//system:null //immediately replaced with a call to Game.generateNewSystem()
 	system:{
 		ships:[],
 		bodies:[]
@@ -43,8 +40,10 @@ var Game={
 };
 
 window.addEventListener('load',function(){
-	Game.system.ships[0]=new Ship(250,0,4,8);
 	Game.generateNewSystem();
+	Game.system.ships[0]=new Ship(250,0,4,8);
+	setTimeout(Game.loop,100); //this has a timer because of loading errors, I need to figure out and fix this
+	physics.setOrbit(Game.system.bodies[0],Game.system.ships[0]);
 });
 //Game.generateNewSystem();
 
@@ -69,7 +68,7 @@ function playerMove(){
 	Render.context.fillRect(x-Game.system.ships[Render.focusID].width/2*Render.scale,y-Game.system.ships[Render.focusID].height/2*Render.scale,Game.system.ships[Render.focusID].width*Render.scale,Game.system.ships[Render.focusID].height*Render.scale);
 }
 
-var System=function(){
+var System=function(count){
 	//render settings
 	//this.iterationDelay=33;
 	//this.renderType='normal';
@@ -83,6 +82,9 @@ var System=function(){
 	//this.focusID=0;
 	//this.scale=0.8;
 
+	//supposed to create a number of bodies based on a value passed to it
+	this.ships=[];
+
 	//tmp for testing
 	this.bodies=[];
 	//this.bodies[0]=new Body(70,[255,0,0,0.5],'star');
@@ -94,37 +96,4 @@ var System=function(){
 	this.bodies[2]=new Planetoid(0,[255,255,0,1],'I HAVE A NAME!!',29,300);
 	physics.setOrbit(this.bodies[0],this.bodies[1]);
 	physics.setOrbit(this.bodies[0],this.bodies[2]);
-	//Game.player THING
-	physics.setOrbit(this.bodies[0],Game.system.ships[0]);
-	//tmp
-	//Game.system={};
-	Game.system.bodies=this.bodies;
 };
-
-window.addEventListener('load',function(){
-	sys=new System();
-	setTimeout(Game.loop,100);
-});
-var tmp=function(){
-	//
-	//Create the System & GUI
-	/*var*/ sys=new System();
-	/*var*/ //gui=new dat.GUI();
-
-	//update dat.GUI elements every second
-	/*setInterval(function(){
-		for (var i in gui.__controllers){
-			gui.__controllers[i].updateDisplay();
-		}
-	},1000);*/
-	//And finally, START
-	/*if (typeof(Render.context)!=='null')
-		Game.loop();
-	else
-		setTimeout(tmp,100);*/
-	Game.loop();
-	//setTimeout(this.loop.call(this),this.iterationDelay);
-	//setInterval(sys.loop,sys.iterationDelay);
-}
-//window.onload=function(){
-//}

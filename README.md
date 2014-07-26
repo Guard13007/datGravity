@@ -9,19 +9,23 @@ cool game.
 It is recommended you do not change stuff outside of Render Settings, as changes
 outside of there will cause weird things to happen and/or break.
 
-ToDo
-----
+ToDo Immediate
+--------------
 
-- [x] Make Render object actually used for the canvas and its current settings
-- [ ] Write GUI.addBody(b)
+- [ ] Make dat.GUI custom placed and make canvas full screen
+
 - [ ] Write Game.generateNewSystem() and actually start using it!
 - [ ] Redo System() and sys to split into Systems, Render, Game.
-      (Game.player should be player, Game.system should be current system)
+
+ToDo Long Term
+--------------
+
 - [ ] Figure out how to load/save/remember settings (and presets) for dat.GUI?
 - [ ] Rewrite Bodies portion of GUI (ultimately I want a separate GUI entirely for
       /a/ Body, and just a way to select them in the main GUI)
 - [ ] Redo player controls to rotation and throttle
-- [ ] Make dat.GUI custom placed and make canvas full screen
+
+- [ ] Write GUI.addBody(b)
 
 Known Bugs
 ----------

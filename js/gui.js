@@ -3,7 +3,7 @@ console.log("GUI loading.");
 var GUI={
 	load:function(){
 		//check if everything else loaded, else wait 10th of a second
-		if (typeof(dat)==='undefined' || typeof(Game)==='undefined' || typeof(Render)==='undefined' || typeof(sys)==='undefined') {
+		if (typeof(dat)==='undefined' || typeof(Game)==='undefined' || typeof(Render)==='undefined') {
 			console.log("GUI not ready.");
 			setTimeout(GUI.load,100);
 			return;
@@ -39,7 +39,7 @@ var GUI={
 		gui.bodies=gui.main.addFolder('Bodies');
 		gui.bodyArray=[];
 		gui.bodyVelocities=[];
-		forEach(sys.bodies,function(b){
+		forEach(Game.system.bodies,function(b){
 			gui.bodyArray.push(gui.bodies.addFolder(b.name));
 			gui.bodyArray[gui.bodyArray.length-1].add(b,'name');
 			gui.bodyArray[gui.bodyArray.length-1].addColor(b,'color');

@@ -12,15 +12,13 @@ outside of there will cause weird things to happen and/or break.
 ToDo Immediate
 --------------
 
-- [ ] Make dat.GUI custom placed and make canvas full screen
-
-- [ ] Write Game.generateNewSystem() and actually start using it!
-- [ ] Redo System() and sys to split into Systems, Render, Game.
+- [ ] Write System()
+- [ ] Fix things to deal with ships (physics and render)
 
 ToDo Long Term
 --------------
 
-- [ ] Figure out how to load/save/remember settings (and presets) for dat.GUI?
+- [x] Figure out how to load/save/remember settings (and presets) for dat.GUI?
 - [ ] Rewrite Bodies portion of GUI (ultimately I want a separate GUI entirely for
       /a/ Body, and just a way to select them in the main GUI)
 - [ ] Redo player controls to rotation and throttle

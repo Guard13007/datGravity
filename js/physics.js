@@ -16,7 +16,7 @@ physics.combine=function(a,b){
 	}
 	//fix focus if needed (this works because a < b always)
 	if (Render.focusType=='body' && Render.focusID==Game.system.bodies.indexOf(b))
-		Game.system.focusID=Game.system.bodies.indexOf(a);
+		Render.focusID=Game.system.bodies.indexOf(a);
 
 	var Lx=a.x*a.mass+b.x*b.mass;		//weight mass with location
 	var Ly=a.y*a.mass+b.y*b.mass;

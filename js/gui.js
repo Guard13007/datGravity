@@ -14,26 +14,27 @@ var GUI={
 		gui.main.remember(Game);
 		gui.main.remember(Render);
 		gui.main.remember(physics);
+		gui.main.add(Game.system,'focusID').name("Player Focus ID");
 		//gui.main.remember(Game.system.bodies);
 
 		//Functions
 		gui.functions=gui.main.addFolder('Functions');
-		gui.functions.add(Game,'generateNewSystem');
-		gui.functions.add(Game,'generateAsteroids');
+		gui.functions.add(Game,'generateNewSystem').name("New System");
+		gui.functions.add(Game,'generateAsteroids').name("Random Asteroids");
 
 		//Render Settings
 		gui.render=gui.main.addFolder('Render Settings');
-		gui.render.add(Render,'iterationDelay',{Max:1,fps_60:16,fps_30:33,fps_10:100,Min:2000});
-		gui.render.add(Render,'renderType',{normal:'normal',pseudo_3D:'3D',sideView:'side'});
+		gui.render.add(Render,'iterationDelay',{Max:1,'60':17,'30':33,'10':100,Min:2000}).name("FPS");
+		gui.render.add(Render,'renderType',{normal:'normal','pseudo 3D':'3D','1D':'side'});
 		gui.render.add(Render,'fade');
 		gui.render.add(Render,'fadeAlpha',0.01,1).step(0.01);
 		gui.render.add(Render,'focusType',['body','ship']);
-		gui.render.add(Render,'focusID');
+		gui.render.add(Render,'focusID').name("Render Focus ID");
 		gui.render.add(Render,'scale',0.01,10);
 
 		//Physics Settings
 		gui.physics=gui.main.addFolder('Physics Settings');
-		gui.physics.add(physics,'G',0.1,1).step(0.1);
+		gui.physics.add(physics,'G',0.1,1).step(0.1).name("Grav Constant");
 		gui.physics.add(physics,'timeStep',0.1,1).step(0.1);
 		console.log("GUI loaded.");
 

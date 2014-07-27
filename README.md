@@ -13,12 +13,11 @@ ToDo Immediate
 --------------
 
 - [ ] Write System()
-- [ ] Fix things to deal with ships (physics and render)
+- [x] Fix things to deal with ships (physics and render)
 
 ToDo Long Term
 --------------
 
-- [x] Figure out how to load/save/remember settings (and presets) for dat.GUI?
 - [ ] Rewrite Bodies portion of GUI (ultimately I want a separate GUI entirely for
       /a/ Body, and just a way to select them in the main GUI)
 - [ ] Redo player controls to rotation and throttle
@@ -28,6 +27,4 @@ ToDo Long Term
 Known Bugs
 ----------
 
-Does not work in IE (probably). There is some code in one place to work in IE,
-but there is at least one place I know doesn't work, and I am not worried about
-fixing it unless I go much farther with this.
+- Render / controls freak out if you modify focusID while focusType is ship.

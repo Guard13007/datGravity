@@ -2,7 +2,10 @@ var Game={
 	generateNewSystem:function(){
 		//Game.system.ships=[]
 		Game.system=new System(random.integer(13,31)); //system generation should be written so that 23 bodies will average a gas giant, six planets, five moons, and eleven asteroids
-		Game.system.ships[0]=new Ship(250,0,4,8);
+		Game.system.ships[0]=new Ship("test",
+			[new Tank(-2,-4,4,8,[255,255,0,1]),new Tank(-4,-2,8,4,[255,0,0,0.8])],
+			250,0);//new Ship(250,0,4,8);
+		console.log(Game.system.ships[0]);
 		physics.setOrbit(Game.system.bodies[0],Game.system.ships[0]);
 	},
 	generateAsteroids:function(){
@@ -21,24 +24,33 @@ var Game={
 		}
 	},
 	loop:function(){
-		forEachCompare(Game.system.bodies,function(a,b){physics.applyGravity(a,b);});
+		//PHYSICS
 		forEachCompare(Game.system.bodies,function(a,b){
 			if (physics.radialCollision(a,b)) physics.combine(a,b);
 		});
+		forEachCompare(Game.system.bodies,function(a,b){physics.applyGravity(a,b);});
+		forEachCompare(Game.system.ships,function(a,b){physics.applyGravity(a,b);});
+		forEach(Game.system.bodies,function(A){
+			forEach(Game.system.ships,function(B){
+				physics.applyGravity(A,B);
+			});
+		});/**/
+		/*for (var i=0;i<Game.system.bodies.length;i++)
+			for (var j=0;i<Game.system.ships.length;i++)
+				physics.applyGravity(Game.system.bodies[i],Game.system.ships[j]);*/
+		//RENDER
 		Render.clear();
-		if (Images.loaded===true) Render.context.drawImage(Images.fx.rcs,100,100); //tmp for test purpose
+		/**/if (Images.loaded===true) Render.context.drawImage(Images.fx.rcs,100,100); //tmp for test purpose
 		forEach(Game.system.bodies,function(b){
 			physics.updateLocation(b);
 			Render.draw(b);
 		});
-		//player shit
-		checkInput();
-		playerMove();
+		checkInput(); //needs to be moved / rewritten?
+		forEach(Game.system.ships,function(b){
+			physics.updateLocation(b);
+			Render.draw(b);
+		});
 		setTimeout(Game.loop,Render.iterationDelay);
-	},
-	system:{
-		ships:[],
-		bodies:[]
 	}
 };
 
@@ -47,48 +59,13 @@ addEventHandler(window,'load',function(){
 	setTimeout(Game.loop,100); //this has a timer because of loading errors, I need to figure out and fix this
 });
 
-//OLD
-//temp player object stuff
-//var player=new Ship(250,0,4,8);
-function playerMove(){
-	forEach(Game.system.bodies,function(b){physics.applyGravity(Game.system.ships[Render.focusID],b);});
-	physics.updateLocation(Game.system.ships[Render.focusID]);
-	Render.context.beginPath();
-	Render.context.fillStyle='rgba('+Game.system.ships[Render.focusID].color[0]+','+Game.system.ships[Render.focusID].color[1]+','+Game.system.ships[Render.focusID].color[2]+','+Game.system.ships[Render.focusID].color[3]+')';
-	if (Render.focusType=='body'){
-		var x=(Game.system.ships[Render.focusID].x-Game.system.bodies[Render.focusID].x)*Render.scale-Game.system.ships[Render.focusID].width/2+Render.canvas.width/2;
-		var y=(Game.system.ships[Render.focusID].y-Game.system.bodies[Render.focusID].y)*Render.scale-Game.system.ships[Render.focusID].height/2+Render.canvas.height/2;
-	} else if (Render.focusType=='ship'){
-		//tmp just uses Game.system.ships[Render.focusID] position, later array
-		var x=(Game.system.ships[Render.focusID].x-Game.system.ships[Render.focusID].x)*Render.scale-Game.system.ships[Render.focusID].width/2+Render.canvas.width/2;
-		var y=(Game.system.ships[Render.focusID].y-Game.system.ships[Render.focusID].y)*Render.scale-Game.system.ships[Render.focusID].height/2+Render.canvas.height/2;
-	}
-	Render.context.fillRect(x-Game.system.ships[Render.focusID].width/2*Render.scale,y-Game.system.ships[Render.focusID].height/2*Render.scale,Game.system.ships[Render.focusID].width*Render.scale,Game.system.ships[Render.focusID].height*Render.scale);
-}
-
 var System=function(count){
-	//render settings
-	//this.iterationDelay=33;
-	//this.renderType='normal';
-	//this.fade=false;
-	//this.fadeAlpha=0.03;
-	/*this.focus={
-		type:'body',
-		id:0
-	};*/
-	//this.focusType='ship';
-	//this.focusID=0;
-	//this.scale=0.8;
-
-	//supposed to create a number of bodies based on a value passed to it
+	this.focusID=0;
 	this.ships=[];
+	this.bodies=[];
+	//supposed to create a number of bodies based on a value passed to it
 
 	//tmp for testing
-	this.bodies=[];
-	//this.bodies[0]=new Body(70,[255,0,0,0.5],'star');
-	//this.bodies[1]=new Body(4,[0,255,0,0.5],'planet',200);
-	//this.bodies[2]=new Body(1,[0,255,255,0.8],'asteroid thing',500);
-	//physics.setOrbit(this.bodies[0],this.bodies[1]);
 	this.bodies[0]=new Planetoid(200,[255,0,0,0.5],'alpha');
 	this.bodies[1]=new Planetoid(10,[0,0,255,1],'bravo',200,567);
 	this.bodies[2]=new Planetoid(0,[255,255,0,1],'I HAVE A NAME!!',29,300);

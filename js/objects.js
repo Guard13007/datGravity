@@ -6,9 +6,10 @@ if (typeof(physics)==='undefined') {
 
 var Body=function(color,name,x,y,rotationSpeed){
 	this.v=new physics.vector;
+	this.type="Body (generic)";
 
 	color? this.color=color : this.color=[1,1,1,1];
-	name? this.name=name : this.name='unnamed';
+	name? this.name=name : this.name='unnamed body';
 
 	x? this.x=x : this.x=0;
 	y? this.y=y : this.y=0;
@@ -18,6 +19,7 @@ var Body=function(color,name,x,y,rotationSpeed){
 
 var Planetoid=function(radius,color,name,x,y,rotationSpeed){
 	Body.call(this,color,name,x,y,rotationSpeed);
+	this.type="Planetoid";
 
 	radius? this.radius=radius : this.radius=1;
 	this.mass=Math.pow(this.radius,2.7);
@@ -25,17 +27,21 @@ var Planetoid=function(radius,color,name,x,y,rotationSpeed){
 
 var Ship=function(name,Parts,x,y,rotation){
 	Body.call(this,[1,1,1,1],name,x,y);
+	this.type="Ship";
+
 	Parts? this.Parts=Parts : this.Parts=[]; //should throw error? log error?
 	rotation? this.rotation=rotation : this.rotation=0;
 };
 
-var Ship=function(x,y,width,height,rotation){
+var Tank=function(x,y,width,height,color,name,rotation){
 	//right now just makes rectanlge "fuel tank" to be reused later
 	//color is temporary value, yellow, should be shade of grey probably
 
-	Body.call(this,[255,255,0,1],'fuel tank',x,y);
+	//Body.call(this,[255,255,0,1],'fuel tank',x,y);
+	this.type="Tank";
+
 	color? this.color=color : this.color=[1,1,1,1];
-	name? this.name=name : this.name='unnamed';
+	name? this.name=name : this.name='unnamed tank';
 	x? this.x=x : this.x=0;
 	y? this.y=y : this.y=0;
 

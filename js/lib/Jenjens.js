@@ -417,17 +417,21 @@ var Jenjens={
 			if (Dy<0) {Ny=true;Dy=-Dy;}
 
 			var g=Jenjens.physics.G*b.mass/Ds;	//gravitational acceleration
-			var Ax=Dx*g/(Dx+Dy);				//split acceleration into X/Y
-			var Ay=g-Ax;
-			if (Nx) Ax=-Ax;	if (Ny) Ay=-Ay;		//fix acceleration direction
-			a.v.x-=Ax*Jenjens.physics.timeStep;	//apply acceleration
-			a.v.y-=Ay*Jenjens.physics.timeStep;
+			if (isFinite(g)){
+				var Ax=Dx*g/(Dx+Dy);				//split acceleration into X/Y
+				var Ay=g-Ax;
+				if (Nx) Ax=-Ax;	if (Ny) Ay=-Ay;		//fix acceleration direction
+				a.v.x-=Ax*Jenjens.physics.timeStep;	//apply acceleration
+				a.v.y-=Ay*Jenjens.physics.timeStep;
+			}
 
 			g=Jenjens.physics.G*a.mass/Ds;		//gravitational acceleration
-			Ax=Dx*g/(Dx+Dy);	Ay=g-Ax;		//split acceleration into X/Y
-			if (Nx) Ax=-Ax;	if (Ny) Ay=-Ay;		//fix acceleration direction
-			b.v.x+=Ax*Jenjens.physics.timeStep;	//apply acceleration
-			b.v.y+=Ay*Jenjens.physics.timeStep;
+			if (isFinite(g)){
+				Ax=Dx*g/(Dx+Dy);	Ay=g-Ax;		//split acceleration into X/Y
+				if (Nx) Ax=-Ax;	if (Ny) Ay=-Ay;		//fix acceleration direction
+				b.v.x+=Ax*Jenjens.physics.timeStep;	//apply acceleration
+				b.v.y+=Ay*Jenjens.physics.timeStep;
+			}
 		},
 		//FORMAT
 		//	objects with x/y locations, mass values,
@@ -666,12 +670,6 @@ function getPeriapsis(parent,child) {return 2*getSemiMajorAxis(parent,child)-get
 		forEach:		function(array,action){
 			for (var i=0;i<array.length;i++)
 				action(array[i]);
-		},
-		//STUFF ABOUT IT HERE
-		//basically same, but also gives you current index number
-		forEach2:		function(array,action){
-			for (var i=0;i<array.length;i++)
-				action(array[i],i);
 		},
 		//FORMAT
 		//	array	array with elements to compare

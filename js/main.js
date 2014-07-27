@@ -26,6 +26,7 @@ var Game={
 			if (physics.radialCollision(a,b)) physics.combine(a,b);
 		});
 		Render.clear();
+		if (Images.loaded===true) Render.context.drawImage(Images.fx.rcs,100,100); //tmp for test purpose
 		forEach(Game.system.bodies,function(b){
 			physics.updateLocation(b);
 			Render.draw(b);
@@ -45,9 +46,6 @@ window.addEventListener('load',function(){
 	Game.generateNewSystem();
 	setTimeout(Game.loop,100); //this has a timer because of loading errors, I need to figure out and fix this
 });
-//Game.generateNewSystem();
-
-
 
 //OLD
 //temp player object stuff

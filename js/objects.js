@@ -23,6 +23,12 @@ var Planetoid=function(radius,color,name,x,y,rotationSpeed){
 	this.mass=Math.pow(this.radius,2.7);
 };
 
+var Ship=function(name,Parts,x,y,rotation){
+	Body.call(this,[0,0,0,0],name,x,y);
+	Parts? this.Parts=Parts : this.Parts=[]; //should throw error? log error?
+	rotation? this.rotation=rotation : this.rotation=0;
+};
+
 var Ship=function(x,y,width,height,rotation){
 	//right now just makes rectanlge "fuel tank" to be reused later
 	//color is temporary value, yellow, should be shade of grey probably

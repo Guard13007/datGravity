@@ -5,7 +5,7 @@ var Game={
 		Game.system.ships[0]=new Ship("test",
 			[new Tank(-2,-4,4,8,[255,255,0,1]),new Tank(-4,-2,8,4,[255,0,0,0.8])],
 			250,0);//new Ship(250,0,4,8);
-		console.log(Game.system.ships[0]);
+		//console.log(Game.system.ships[0]);
 		physics.setOrbit(Game.system.bodies[0],Game.system.ships[0]);
 	},
 	generateAsteroids:function(){

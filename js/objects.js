@@ -24,7 +24,7 @@ var Planetoid=function(radius,color,name,x,y,rotationSpeed){
 };
 
 var Ship=function(name,Parts,x,y,rotation){
-	Body.call(this,[0,0,0,0],name,x,y);
+	Body.call(this,[1,1,1,1],name,x,y);
 	Parts? this.Parts=Parts : this.Parts=[]; //should throw error? log error?
 	rotation? this.rotation=rotation : this.rotation=0;
 };
@@ -32,16 +32,22 @@ var Ship=function(name,Parts,x,y,rotation){
 var Ship=function(x,y,width,height,rotation){
 	//right now just makes rectanlge "fuel tank" to be reused later
 	//color is temporary value, yellow, should be shade of grey probably
+
 	Body.call(this,[255,255,0,1],'fuel tank',x,y);
+	color? this.color=color : this.color=[1,1,1,1];
+	name? this.name=name : this.name='unnamed';
+	x? this.x=x : this.x=0;
+	y? this.y=y : this.y=0;
 
 	width? this.width=width : this.width=1;
 	height? this.height=height : this.height=1;
 	this.mass=0.141*this.width*this.height; //density of liq oxy is 1.141g/cm^3
 	rotation? this.rotation=rotation : this.rotation=0;
+
+	/* determine fuel mass based on current tank size/mass and plan accordingly in the future
+		4.512 * 0.9 = 4.0608
+		4.512 * 0.1 = 0.4512
+	*/
 };
-/* determine fuel mass based on current tank size/mass and plan accordingly in the future
-4.512 * 0.9 = 4.0608
-4.512 * 0.1 = 0.4512
-*/
 
 console.log("Constructors (objects.js) loaded.");

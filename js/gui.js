@@ -40,7 +40,7 @@ var GUI={
 		//this needs to be redone somehow to account for bodies being removed or added or replaced
 		//I HATE THE WAY THIS WORKS
 		//Bodies
-		gui.bodies=gui.main.addFolder('Bodies');
+		/*gui.bodies=gui.main.addFolder('Bodies');
 		gui.bodyArray=[];
 		gui.bodyVelocities=[];
 		forEach(Game.system.bodies,function(b){
@@ -54,10 +54,12 @@ var GUI={
 			gui.bodyVelocities.push(gui.bodyArray[gui.bodyArray.length-1].addFolder('Velocity'));
 			gui.bodyVelocities[gui.bodyVelocities.length-1].add(b.v,'x');
 			gui.bodyVelocities[gui.bodyVelocities.length-1].add(b.v,'y');
-		});
+		});*/
 	},
 	addBody:function(b){
 		//do stuff!
+		//not even sure I'm going to use this? it is supposed to add a Body to the GUI,
+		//  but we will be removing Bodies from the GUI
 	}
 };
 GUI.load();

@@ -42,7 +42,7 @@ var Game={
 	}
 };
 
-window.addEventListener('load',function(){
+addEventHandler(window,'load',function(){
 	Game.generateNewSystem();
 	setTimeout(Game.loop,100); //this has a timer because of loading errors, I need to figure out and fix this
 });

@@ -43,6 +43,7 @@ io=Jenjens.io;
 forEach=Jenjens.util.forEach;
 forEach2=Jenjens.util.forEach2;
 forEachCompare=Jenjens.util.forEachCompare;
+addEventHandler=Jenjens.util.addEventHandler;
 Interval=Jenjens.util.Interval;
 Timer=Jenjens.util.Timer;
 //debug

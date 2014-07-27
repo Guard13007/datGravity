@@ -2,16 +2,15 @@ console.log("IO loading.");
 
 var keysHeld=[];
 
-//addEventListener doesn't work in IE
-window.addEventListener('keydown',function(event){
+addEventHandler(window,'keydown',function(event){
 	var code=event.keyCode? event.keyCode : event.charCode;
 	keysHeld[code]=true;
 	console.log(code); //temporary
-},false);
-window.addEventListener('keyup',function(event){
+});
+addEventHandler(window,'keyup',function(event){
 	var code=event.keyCode? event.keyCode : event.charCode;
 	keysHeld[code]=false;
-},false);
+});
 
 function checkInput(){
 	if (keysHeld[87]) //W

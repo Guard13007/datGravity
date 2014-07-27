@@ -685,6 +685,13 @@ function getPeriapsis(parent,child) {return 2*getSemiMajorAxis(parent,child)-get
 				for (var j=i+1;j<array.length;j++)
 					action(array[i],array[j]);
 		},
+		//stuff about it
+		addEventHandler:function(element,eventType,handler,capture){
+			if (element.addEventListener)
+				element.addEventListener(eventType,handler,capture); //may not quite work as intended
+			else if (element.attachEvent)
+				element.attachEvent('on'+eventType,handler);
+		},
 		//FORMAT
 		//	function to repeat
 		//	timing to use

@@ -35,7 +35,7 @@ var Render={
 	context:null //set on load
 };
 
-window.addEventListener('load',function(){
+addEventHandler(window,'load',function(){
 	Render.canvas=document.getElementById('canvas');
 	Render.canvas.width=window.innerWidth;
 	Render.canvas.height=window.innerHeight;
@@ -43,8 +43,7 @@ window.addEventListener('load',function(){
 	console.log("Render loaded.");
 });
 
-//this should be handled differently
-window.onresize=function(){
+addEventHandler(window,'resize',function(){
 	Render.canvas.width=window.innerWidth;
 	Render.canvas.height=window.innerHeight;
-}
+});

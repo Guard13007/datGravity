@@ -28,6 +28,30 @@ var Planetoid=function(radius,x,y,color,rotationSpeed,name){
 	color? this.color=color : this.color=[255,255,255,1];
 };
 
+var Asteroid=function(x,y,rotationSpeed,name){
+	var c=random.integer(21,169);
+	Planetoid.call(this,random.number(0.5,40),x,y,[c,c,c,1],rotationSpeed,name);
+	this.type="Asteroid";
+};
+
+var Planet=function(x,y,rotationSpeed,name){
+	var color=[255,255,255,1]; //temporary
+	Planetoid.call(this,random.number(289,404),x,y,color,rotationSpeed,name);
+	this.type="Planet";
+};
+
+var Moon=function(x,y,rotationSpeed,name){
+	var color=[255,255,255,1]; //temporary
+	Planetoid.call(this,random.number(81,149),x,y,color,rotationSpeed,name);
+	this.type="Moon";
+};
+
+var GasGiant=function(x,y,rotationSpeed,name){
+	var color=[255,255,255,1]; //temporary
+	Planetoid.call(this,random.number(666,1313),x,y,color,rotationSpeed,name);
+	this.type="GasGiant";
+};
+
 var Ship=function(Vessel,x,y,rotation,rotationSpeed,name){
 	//old: name,Parts,x,y,rotation
 	Body.call(this,x,y,rotationSpeed,name);
@@ -105,7 +129,7 @@ var Tank=function(width,height,color,name){
 
 	this.massCapacity=0.141*this.width*this.height*0.9;
 };
-console.log(new Tank(10,10,[255,0,0,1],"Red Hundred"));
+//console.log(new Tank(10,10,[255,0,0,1],"Red Hundred"));
 
 var Fuel=function(density){
 	//this is so dumb, it should just be a defined object

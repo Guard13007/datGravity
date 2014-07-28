@@ -629,12 +629,13 @@ function getPeriapsis(parent,child) {return 2*getSemiMajorAxis(parent,child)-get
 		}
 	},
 	io:{
-		addEvent:	function(event,handler,element){
+		addEvent:	function(event,handler,element,capture){
 			if (!element) element=document;
 			if (element.addEventListener)
-				element.addEventListener(event,handler,false);
-			else
+				element.addEventListener(event,handler,capture);
+			else if (element.attachEvent)
 				element.attachEvent('on'+event,handler);
+			else throw "No method to addEvent.";
 		},
 		keysHeld:[],
 		keyDown:	function(evemt){
@@ -689,6 +690,7 @@ function getPeriapsis(parent,child) {return 2*getSemiMajorAxis(parent,child)-get
 				element.addEventListener(eventType,handler,capture); //may not quite work as intended
 			else if (element.attachEvent)
 				element.attachEvent('on'+eventType,handler);
+			else throw "No method to addEvent.";
 		},
 		//FORMAT
 		//	function to repeat

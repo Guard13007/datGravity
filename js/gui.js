@@ -3,7 +3,7 @@ console.log("GUI loading.");
 var GUI={
 	load:function(){
 		//check if everything else loaded, else wait 10th of a second
-		if (typeof(dat)==='undefined' || typeof(Game)==='undefined' || typeof(Render)==='undefined') {
+		if (typeof(dat)==='undefined' || typeof(Game)==='undefined' || typeof(Game.system)==='undefined' || typeof(Render)==='undefined') {
 			console.log("GUI not ready.");
 			setTimeout(GUI.load,100);
 			return;
@@ -30,7 +30,9 @@ var GUI={
 		gui.render.add(Render,'fadeAlpha',0.01,1).step(0.01);
 		gui.render.add(Render,'focusType',['body','ship']);
 		gui.render.add(Render,'focusID').name("Render Focus ID");
-		gui.render.add(Render,'scale',0.01,10);
+		gui.render.add(Render,'scale',0.5,10).step(0.1).name("Scale (close)");
+		gui.render.add(Render,'scale',0.001,0.05).step(0.001).name("Scale (med)");
+		gui.render.add(Render,'scale',0.0001,0.001).step(0.0001).name("Scale (far)");
 
 		//Physics Settings
 		gui.physics=gui.main.addFolder('Physics Settings');

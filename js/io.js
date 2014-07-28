@@ -1,35 +1,29 @@
 console.log("IO loading.");
 
-var keysHeld=[];
-
-addEventHandler(window,'keydown',function(event){
-	var code=event.keyCode? event.keyCode : event.charCode;
-	keysHeld[code]=true;
-	console.log(code); //temporary
+io.addEvent('keydown',function(e){
+	io.keyDown(e);
+	console.log(e.keyCode); //lazy way of doing this
 });
-addEventHandler(window,'keyup',function(event){
-	var code=event.keyCode? event.keyCode : event.charCode;
-	keysHeld[code]=false;
-});
+io.addEvent('keyup',io.keyUp);
 
 function checkInput(){
 	//MASSIVELY NEEDS REWRITE, probably needs to be more incorporated
 	// with Game.loop() instead of its own function
-	if (keysHeld[87]) //W
+	if (io.keysHeld[87]) //W
 		Game.system.ships[Game.system.focusID].v.y-=1;
-	if (keysHeld[65]) //A
+	if (io.keysHeld[65]) //A
 		Game.system.ships[Game.system.focusID].v.x-=1;
-	if (keysHeld[83]) //S
+	if (io.keysHeld[83]) //S
 		Game.system.ships[Game.system.focusID].v.y+=1;
-	if (keysHeld[68]) //D
+	if (io.keysHeld[68]) //D
 		Game.system.ships[Game.system.focusID].v.x+=1;
-	if (keysHeld[38]) //Up Arrow
+	if (io.keysHeld[38]) //Up Arrow
 		Game.system.ships[Game.system.focusID].v.y-=1;
-	if (keysHeld[37]) //Left Arrow
+	if (io.keysHeld[37]) //Left Arrow
 		Game.system.ships[Game.system.focusID].v.x-=1;
-	if (keysHeld[40]) //Down Arrow
+	if (io.keysHeld[40]) //Down Arrow
 		Game.system.ships[Game.system.focusID].v.y+=1;
-	if (keysHeld[39]) //Right Arrow
+	if (io.keysHeld[39]) //Right Arrow
 		Game.system.ships[Game.system.focusID].v.x+=1;
 }
 

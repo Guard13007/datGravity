@@ -12,7 +12,7 @@ outside of there will cause weird things to happen and/or break.
 ToDo Immediate
 --------------
 
-- [ ] Write System() to generate randomly
+- [x] Write System() to generate randomly
 - [ ] add throttle control to player, and rotation controls
 
 - [ ] I need to approach this from a different perspective. Instead of making constructors for

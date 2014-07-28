@@ -5,8 +5,8 @@ if (typeof(physics)==='undefined') {
 }
 
 //Redefine constants
-physics.G=0.4;
-physics.timeStep=0.1;
+physics.G=1;//0.4;
+physics.timeStep=1;//0.1;
 
 //Define new constants
 physics.PlanetoidDensity=2.7;

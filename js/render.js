@@ -1,13 +1,13 @@
 console.log("Render loading.");
 
 var Render={
-	iterationDelay:33,
+	iterationDelay:1,//33,
 	renderType:'normal',
-	fade:false,
-	fadeAlpha:0.03,
-	focusType:'ship',
+	fade:true,//false,
+	fadeAlpha:0.01,//0.03,
+	focusType:'body',//'ship',
 	focusID:0,
-	scale:0.8,
+	scale:0.0005,//0.8,
 	clear:function(){
 		if (Render.fade) {
 			Render.context.fillStyle='rgba(0,0,0,'+Render.fadeAlpha+')';
@@ -34,7 +34,7 @@ var Render={
 		} else if (Render.renderType=='side'){
 			Fy=Render.canvas.height/2;
 		}
-		if (b.type=='Planetoid'){
+		if (b.type=='Planetoid' || b.type=='Asteroid' || b.type=='Planet' || b.type=='Moon' || b.type=='GasGiant'){
 			Render.context.beginPath();
 			Render.context.fillStyle='rgba('+b.color[0]+','+b.color[1]+','+b.color[2]+','+b.color[3]+')';
 			var r=b.radius*Render.scale; if (r<0.5) r=1;
@@ -61,6 +61,8 @@ var Render={
 			});
 			Render.context.rotate(-b.rotation);
 			Render.context.translate(-Fx,-Fy);
+		} else {
+			console.log("Invalid type:",b);
 		}
 	}/*,
 	canvas:null, //set on load

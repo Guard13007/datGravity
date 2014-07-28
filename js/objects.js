@@ -143,13 +143,33 @@ var Vessel=function(Parts,name){
 	//isn't the name going to be defined by WHAT object we're setting here?
 };
 
-var Part=function(){
-	//
+var Part=function(mass,color,name){
+	//parts don't have x/y/rotation because a part is a definition for use in a Vessel,
+	// when a Vessel is created, a Part may be placed with a rotation and location
+	this.type="Part";
+	mass? this.mass=mass : this.mass=0; //this should never receive 0
+
+	color? this.color=color : this.color=[1,1,1,1];
+	name? this.name=name : this.name="unnamed";
 };
 
-var Tank=function(){
-	//
+var Tank=function(width,height,color,name){
+	width? this.width=width : this.width=1;
+	height? this.height=height : this.height=1;
+
+	Part.call(this,0.141*this.width*this.height/10,color,name);
+	this.type="Tank";
+
+	this.massCapacity=0.141*this.width*this.height*0.9;
 };
+console.log(new Tank(10,10,[255,0,0,1],"Red Hundred"));
+
+var Fuel=function(density){
+	//this is so dumb, it should just be a defined object
+	density? this.density=density : this.density=1;
+};
+
+liquidOxygen=new Fuel(0.141);
 
 
 

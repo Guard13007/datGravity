@@ -8,6 +8,9 @@ if (typeof(physics)==='undefined') {
 physics.G=0.4;
 physics.timeStep=0.1;
 
+//Define new constants
+physics.PlanetoidDensity=2.7;
+
 //combine bodies
 physics.combine=function(a,b){
 	if (b.mass>a.mass){					//keep values of bigger

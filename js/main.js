@@ -2,9 +2,43 @@ var Game={
 	generateNewSystem:function(){
 		//Game.system.ships=[]
 		Game.system=new System(random.integer(13,31)); //system generation should be written so that 23 bodies will average a gas giant, six planets, five moons, and eleven asteroids
-		Game.system.ships[0]=new Ship("test",
+		/*Game.system.ships[0]=new Ship("test",
 			[new Tank(-2,-4,4,8,[255,255,0,1]),new Tank(-4,-2,8,4,[255,0,0,0.8])],
-			250,0);//new Ship(250,0,4,8);
+			250,0);//new Ship(250,0,4,8);*/
+		//temporary while objects are remade:
+		Game.system.ships[0]={
+			Parts:[
+				{
+					color:[255,255,0,1],
+					height:8,
+					mass:4.512,
+					name:"tank",
+					rotation:0,
+					type:"Tank",
+					width:4,
+					x:-2,
+					y:-4
+				},
+				{
+					color:[255,0,0,0.8],
+					height:4,
+					mass:4.512,
+					name:"tank",
+					rotation:0,
+					type:"Tank",
+					width:8,
+					x:-4,
+					y:-2
+				}
+			],
+			name:"test",
+			rotation:0,
+			rotationSpeed:0,
+			type:"Ship",
+			v:new physics.vector(),
+			x:250,
+			y:0
+		};
 		//console.log(Game.system.ships[0]);
 		physics.setOrbit(Game.system.bodies[0],Game.system.ships[0]);
 	},

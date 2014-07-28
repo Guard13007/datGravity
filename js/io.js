@@ -13,6 +13,8 @@ addEventHandler(window,'keyup',function(event){
 });
 
 function checkInput(){
+	//MASSIVELY NEEDS REWRITE, probably needs to be more incorporated
+	// with Game.loop() instead of its own function
 	if (keysHeld[87]) //W
 		Game.system.ships[Game.system.focusID].v.y-=1;
 	if (keysHeld[65]) //A

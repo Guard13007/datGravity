@@ -15,6 +15,11 @@ ToDo Immediate
 - [ ] Write System() to generate randomly
 - [ ] add throttle control to player, and rotation controls
 
+- [ ] I need to approach this from a different perspective. Instead of making constructors for
+      parts and such, I need to just make a bunch of example parts for either random generation
+      of parts or user-created parts, decide on a UI and how to dynamically build them, then
+      create constructors to handle these once the design is ready?
+
 ToDo Intermediate
 -----------------
 

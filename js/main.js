@@ -13,22 +13,22 @@ var Game={
 					height:8,
 					mass:4.512,
 					name:"tank",
-					rotation:0,
+					rotation:0.1,
 					type:"Tank",
 					width:4,
-					x:-2,
-					y:-4
+					x:-1,
+					y:0
 				},
 				{
 					color:[255,0,0,0.8],
 					height:4,
 					mass:4.512,
 					name:"tank",
-					rotation:0,
+					rotation:Math.Tau/4-0.1,
 					type:"Tank",
 					width:8,
-					x:-4,
-					y:-2
+					x:1,
+					y:0
 				}
 			],
 			name:"test",
@@ -100,9 +100,9 @@ var System=function(count){
 	//supposed to create a number of bodies based on a value passed to it
 
 	//tmp for testing
-	this.bodies[0]=new Planetoid(200,[255,0,0,0.5],'alpha');
-	this.bodies[1]=new Planetoid(10,[0,0,255,1],'bravo',200,567);
-	this.bodies[2]=new Planetoid(0,[255,255,0,1],'I HAVE A NAME!!',29,300);
+	this.bodies[0]=new Planetoid(200,0,0,[255,0,0,0.5]);
+	this.bodies[1]=new Planetoid(10,200,567,[0,0,255,1]);
+	this.bodies[2]=new Planetoid(0,29,300,[255,255,0,1]);
 	physics.setOrbit(this.bodies[0],this.bodies[1]);
 	physics.setOrbit(this.bodies[0],this.bodies[2]);
 };

@@ -4,95 +4,7 @@ if (typeof(physics)==='undefined') {
 	alert("Error loading physics. Contact Guard13007."); //this is in case this is somehow loaded before Jenjens / Jenjens-alias
 }
 
-var Body=function(color,name,x,y,rotationSpeed){
-	this.v=new physics.vector;
-	this.type="Body (generic)";
-
-	color? this.color=color : this.color=[1,1,1,1];
-	name? this.name=name : this.name='unnamed body';
-
-	x? this.x=x : this.x=0;
-	y? this.y=y : this.y=0;
-	rotationSpeed? this.rotationSpeed=rotationSpeed : this.rotationSpeed=0;
-	this.rotation=0;
-};
-
-var Planetoid=function(radius,color,name,x,y,rotationSpeed){
-	Body.call(this,color,name,x,y,rotationSpeed);
-	this.type="Planetoid";
-
-	radius? this.radius=radius : this.radius=1;
-	this.mass=Math.pow(this.radius,2.7);
-};
-
-var Ship=function(name,Parts,x,y,rotation){
-	Body.call(this,[1,1,1,1],name,x,y);
-	this.type="Ship";
-
-	Parts? this.Parts=Parts : this.Parts=[]; //should throw error? log error?
-	rotation? this.rotation=rotation : this.rotation=0;
-};
-
-var Part=function(x,y,width,height,color,name,rotation){
-	//
-};
-
-var Tank=function(x,y,width,height,color,name,rotation){
-	//right now just makes rectanlge "fuel tank" to be reused later
-	//color is temporary value, yellow, should be shade of grey probably
-
-	//Body.call(this,[255,255,0,1],'fuel tank',x,y);
-	this.type="Tank";
-
-	color? this.color=color : this.color=[1,1,1,1];
-	name? this.name=name : this.name='unnamed tank';
-	x? this.x=x : this.x=0;
-	y? this.y=y : this.y=0;
-
-	width? this.width=width : this.width=1;
-	height? this.height=height : this.height=1;
-	this.mass=0.141*this.width*this.height; //density of liq oxy is 1.141g/cm^3
-	rotation? this.rotation=rotation : this.rotation=0;
-
-	/* determine fuel mass based on current tank size/mass and plan accordingly in the future
-		4.512 * 0.9 = 4.0608
-		4.512 * 0.1 = 0.4512
-	*/
-};
-
-var Thruster=function(x,y,width,height,color,name,rotation){
-	this.type="Thruster";
-
-	color? this.color=color : this.color=[1,1,1,1];
-	name? this.name=name : this.name='unnamed thruster';
-	x? this.x=x : this.x=0;
-	y? this.y=y : this.y=0;
-
-	width? this.width=width : this.width=0.2;
-	height? this.height=height : this.height=0.1;
-	this.mass=0.3*this.width*this.height;
-	rotation? this.rotation=rotation : this.rotation=0;
-};
-
-var Engine=function(x,y,width,height,color,name,rotation){
-	this.type="Engine";
-
-	color? this.color=color : this.color=[1,1,1,1];
-	name? this.name=name : this.name='unnamed engine';
-	x? this.x=x : this.x=0;
-	y? this.y=y : this.y=0;
-
-	width? this.width=width : this.width=1;
-	height? this.height=height : this.height=0.4;
-	this.mass=0.5*this.width*this.height;
-	rotation? this.rotation=rotation : this.rotation=0;
-};
-
-console.log("Constructors (objects.js) loaded.");
-
-//REWRITING EVERYTHING WITH NO REGARD TO PREVIOUS DESIGN
-
-/*var Body=function(x,y,rotationSpeed,name){
+var Body=function(x,y,rotationSpeed,name){
 	x? this.x=x : this.x=0;
 	y? this.y=y : this.y=0;
 	rotationSpeed? this.rotationSpeed=rotationSpeed : this.rotationSpeed=0;
@@ -113,14 +25,17 @@ var Planetoid=function(radius,x,y,color,rotationSpeed,name){
 
 	radius? this.radius=radius : this.radius=1;
 	this.mass=Math.pow(this.radius,physics.PlanetoidDensity);
-};*/
+	color? this.color=color : this.color=[255,255,255,1];
+};
 
 var Ship=function(Vessel,x,y,rotation,rotationSpeed,name){
 	//old: name,Parts,x,y,rotation
-	this.Parts=Vessel.Parts;
-
 	Body.call(this,x,y,rotationSpeed,name);
 	this.type="Ship";
+
+	this.Parts=Vessel.Parts;
+	this.mass=Vessel.mass;
+	this.centerOfMass=Vessel.centerOfMass;
 
 	rotation? this.rotation=rotation : this.rotation=0;
 
@@ -128,20 +43,48 @@ var Ship=function(Vessel,x,y,rotation,rotationSpeed,name){
 		//needs to loop through this.Parts and update this.mass with appropriate value
 	};*/
 
-	this.updateMass(); //is called right away to set initial mass
+	/*this.mass=0;
+	this.updateMass(); //is called right away to set initial mass*/
 };
 
 Ship.prototype.updateMass=function(){
-	//needs to loop through this.Parts and update this.mass with appropriate value
+	var M=0;
+	forEach(this.Parts,function(b){
+		M+=b.mass;
+	});
+	this.mass=M;
+};
+
+Ship.prototype.updateCenterOfMass=function(){
+	var Lx=0;	var Ly=0;	var totalMass=0;
+	forEach(this.Parts,function(b){
+		Lx+=b.x*b.mass;	Ly+=b.y*b.mass;
+		totalMass+=b.mass;
+	});
+	this.centerOfMass={
+		x:Lx/totalMass,
+		y:Ly/totalMass
+	};
+	if (isNaN(this.centerOfMass.x)) this.centerOfMass.x=0;
+	if (isNaN(this.centerOfMass.y)) this.centerOfMass.y=0;
 };
 
 var Vessel=function(Parts,name){
 	Parts? this.Parts=Parts : this.Parts=[];
 	this.type="Vessel";
 
-	name? this.name=name : this.name='unnamed'; //should this even be here?
-	//isn't the name going to be defined by WHAT object we're setting here?
+	name? this.name=name : this.name='unnamed';
+
+	//defaults
+	this.mass=0;
+	this.centerOfMass={
+		x:0,
+		y:0
+	};
 };
+
+Vessel.prototype.updateMass=Ship.prototype.updateMass;
+Vessel.prototype.updateCenterOfMass=Ship.prototype.updateCenterOfMass;
 
 var Part=function(mass,color,name){
 	//parts don't have x/y/rotation because a part is a definition for use in a Vessel,
@@ -149,7 +92,7 @@ var Part=function(mass,color,name){
 	this.type="Part";
 	mass? this.mass=mass : this.mass=0; //this should never receive 0
 
-	color? this.color=color : this.color=[1,1,1,1];
+	color? this.color=color : this.color=[255,255,255,1];
 	name? this.name=name : this.name="unnamed";
 };
 
@@ -171,35 +114,71 @@ var Fuel=function(density){
 
 liquidOxygen=new Fuel(0.141);
 
+//TEMPORARY
+/*tmp=new Vessel([
+	new Tank(10,10,[255,0,0,1],"Red Hundred"),
+	new Tank(10,10,[0,0,255,1],"Blue Hundred")],
+	"Test le Vessel");
+tmp.Parts[0].x=10;
+tmp.Parts[1].x=-10;
+tmp2=new Ship(tmp,100,100,Math.PI,0,"Test le Ship");
+tmp2.updateMass();
+tmp2.updateCenterOfMass();
+console.log(tmp2);*/
+//END TEMP
 
+/*var Tank=function(x,y,width,height,color,name,rotation){
+	//right now just makes rectanlge "fuel tank" to be reused later
+	//color is temporary value, yellow, should be shade of grey probably
 
+	//Body.call(this,[255,255,0,1],'fuel tank',x,y);
+	this.type="Tank";
 
+	color? this.color=color : this.color=[255,255,255,1];
+	name? this.name=name : this.name='unnamed tank';
+	x? this.x=x : this.x=0;
+	y? this.y=y : this.y=0;
 
-// INGORE BELOW HERE FOR NOW KTHX
+	width? this.width=width : this.width=1;
+	height? this.height=height : this.height=1;
+	this.mass=0.141*this.width*this.height; //density of liq oxy is 1.141g/cm^3
+	rotation? this.rotation=rotation : this.rotation=0;
 
-/*var Body=function(x,y,rotationSpeed,name){
-	//
+	/* determine fuel mass based on current tank size/mass and plan accordingly in the future
+		4.512 * 0.9 = 4.0608
+		4.512 * 0.1 = 0.4512
+	*./
 };
 
-var Planetoid=function(radius,x,y,rotationSpeed,color,name){
-	//
+var Thruster=function(x,y,width,height,color,name,rotation){
+	this.type="Thruster";
+
+	color? this.color=color : this.color=[255,255,255,1];
+	name? this.name=name : this.name='unnamed thruster';
+	x? this.x=x : this.x=0;
+	y? this.y=y : this.y=0;
+
+	width? this.width=width : this.width=0.2;
+	height? this.height=height : this.height=0.1;
+	this.mass=0.3*this.width*this.height;
+	rotation? this.rotation=rotation : this.rotation=0;
 };
 
-var Ship=function(Vessel,x,y,rotation,name){
-	//
-};
+var Engine=function(x,y,width,height,color,name,rotation){
+	this.type="Engine";
 
-var Vessel=function(Parts,name){ //,description
-	//
-};
+	color? this.color=color : this.color=[255,255,255,1];
+	name? this.name=name : this.name='unnamed engine';
+	x? this.x=x : this.x=0;
+	y? this.y=y : this.y=0;
 
-var Part=function(x,y,rotation,color){
-	//
-};
-
-var Tank=function(x,y,width,height,color){ //,rotation (not included because a part by itself has no rotation? only when added to something does it get one?)
-	//
+	width? this.width=width : this.width=1;
+	height? this.height=height : this.height=0.4;
+	this.mass=0.5*this.width*this.height;
+	rotation? this.rotation=rotation : this.rotation=0;
 };*/
+
+console.log("Constructors (objects.js) loaded.");
 
 /*
 	Body(color,name,x,y,rotationSpeed)

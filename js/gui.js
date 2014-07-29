@@ -19,6 +19,10 @@ var GUI={
 
 		//Functions
 		gui.functions=gui.main.addFolder('Functions');
+		var b=gui.functions.add(Game,'running');
+		b.onChange(function(v){
+			if (v) Game.loop();
+		});
 		gui.functions.add(Game,'generateNewSystem').name("New System");
 		gui.functions.add(Game,'generateAsteroids').name("Random Asteroids");
 

@@ -5,6 +5,7 @@ var Images={
 		rcs:new Image()
 	}
 };
+Images.fx.rcs.onerror=function(){Images.error=true;};
 Images.fx.rcs.src="img/fx/rcs.png"; //16x10 sideways, right side source
 
 // Check 10 times a second to see if all images are loaded.
@@ -17,8 +18,13 @@ Images.loaded=setInterval(function(){
 	if (loaded) {
 		// Once loaded, Images.loaded==true and this stops looping.
 		clearInterval(Images.loaded);
-		Images.loaded=true;
-		console.log("Images loaded.");
+		if (Images.error){
+			Images.loaded=false;
+			console.log("Error loading images.");
+		} else {
+			Images.loaded=true;
+			console.log("Images loaded.");
+		}
 		return;
 	}
 	console.log("Images not ready.");

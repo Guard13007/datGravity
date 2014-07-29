@@ -1,4 +1,5 @@
 var Game={
+	running:true,
 	generateNewSystem:function(){
 		//Game.system.ships=[]
 		Game.system=new System(random.integer(13,31)); //system generation should be written so that 23 bodies will average a gas giant, six planets, five moons, and eleven asteroids
@@ -74,7 +75,7 @@ var Game={
 				physics.applyGravity(Game.system.bodies[i],Game.system.ships[j]);*/
 		//RENDER
 		Render.clear();
-		/**/if (Images.loaded===true) Render.context.drawImage(Images.fx.rcs,100,100); //tmp for test purpose
+		/**/if (Images.loaded===true) Render.context.drawImage(Images.fx.rcs,100,100); //tmp for test purpose*/
 		forEach(Game.system.bodies,function(b){
 			physics.updateLocation(b);
 			Render.draw(b);
@@ -84,7 +85,7 @@ var Game={
 			physics.updateLocation(b);
 			Render.draw(b);
 		});
-		setTimeout(Game.loop,Render.iterationDelay);
+		if (Game.running) setTimeout(Game.loop,Render.iterationDelay);
 	}
 };
 

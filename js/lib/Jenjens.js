@@ -630,7 +630,7 @@ function getPeriapsis(parent,child) {return 2*getSemiMajorAxis(parent,child)-get
 	},
 	io:{
 		addEvent:	function(event,handler,element,capture){
-			if (!element) element=document;
+			if (!element) element=window;
 			if (element.addEventListener)
 				element.addEventListener(event,handler,capture);
 			else if (element.attachEvent)
@@ -773,13 +773,3 @@ function getPeriapsis(parent,child) {return 2*getSemiMajorAxis(parent,child)-get
 		},
 	}
 };
-//temp
-/*window.onload=function(){
-	Jenjens.render.canvas[0]=document.createElement('canvas');
-	Jenjens.render.context[0]=Jenjens.render.canvas[0].getContext('2d');
-	//document.body.appendChild(Jenjens.render.canvas[0]);
-	document.getElementsByTagName('body')[0].appendChild(Jenjens.render.canvas[0]);
-	Jenjens.render.canvas[0].width=window.innerWidth;
-	Jenjens.render.canvas[0].height=window.innerHeight;
-	Jenjens.io.addEvent('click',Jenjens.debug.showClicks);
-}*/

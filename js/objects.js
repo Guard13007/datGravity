@@ -5,6 +5,7 @@ if (typeof(physics)==='undefined') {
 }
 
 var Body=function(x,y,rotationSpeed,name){
+	// a Body is any object in space
 	x? this.x=x : this.x=0;
 	y? this.y=y : this.y=0;
 	rotationSpeed? this.rotationSpeed=rotationSpeed : this.rotationSpeed=0;
@@ -18,8 +19,15 @@ var Body=function(x,y,rotationSpeed,name){
 	this.mass=0;
 };
 
+Body.prototype.getVelocity=function(){
+	//
+};
+Body.prototype.getOriginDistance=function(){
+	//
+};
+
 var Planetoid=function(radius,x,y,color,rotationSpeed,name){
-	//old: radius,color,name,x,y,rotationSpeed
+	// a Planetoid is a circle
 	Body.call(this,x,y,rotationSpeed,name);
 	this.type="Planetoid";
 
@@ -29,31 +37,35 @@ var Planetoid=function(radius,x,y,color,rotationSpeed,name){
 };
 
 var Asteroid=function(x,y,rotationSpeed,name){
+	// an Asteroid is a small grey Body
 	var c=random.integer(21,169);
 	Planetoid.call(this,random.number(0.5,40),x,y,[c,c,c,1],rotationSpeed,name);
 	this.type="Asteroid";
 };
 
 var Planet=function(x,y,rotationSpeed,name){
+	// a Planet is a medium Body
 	var color=[255,255,255,1]; //temporary
 	Planetoid.call(this,random.number(289,404),x,y,color,rotationSpeed,name);
 	this.type="Planet";
 };
 
 var Moon=function(x,y,rotationSpeed,name){
+	// a Moon orbits a Planet or GasGiant
 	var color=[255,255,255,1]; //temporary
 	Planetoid.call(this,random.number(81,149),x,y,color,rotationSpeed,name);
 	this.type="Moon";
 };
 
 var GasGiant=function(x,y,rotationSpeed,name){
+	// a GasGiant is huge, but not a star
 	var color=[255,255,255,1]; //temporary
 	Planetoid.call(this,random.number(666,1313),x,y,color,rotationSpeed,name);
 	this.type="GasGiant";
 };
 
 var Ship=function(Vessel,x,y,rotation,rotationSpeed,name){
-	//old: name,Parts,x,y,rotation
+	// a Ship can be player controlled
 	Body.call(this,x,y,rotationSpeed,name);
 	this.type="Ship";
 
@@ -62,13 +74,6 @@ var Ship=function(Vessel,x,y,rotation,rotationSpeed,name){
 	this.centerOfMass=Vessel.centerOfMass;
 
 	rotation? this.rotation=rotation : this.rotation=0;
-
-	/*this.updateMass=function(){
-		//needs to loop through this.Parts and update this.mass with appropriate value
-	};*/
-
-	/*this.mass=0;
-	this.updateMass(); //is called right away to set initial mass*/
 };
 
 Ship.prototype.updateMass=function(){
@@ -76,6 +81,7 @@ Ship.prototype.updateMass=function(){
 	forEach(this.Parts,function(b){
 		M+=b.mass;
 	});
+	if (isNaN(M)) M=0;
 	this.mass=M;
 };
 
@@ -94,6 +100,9 @@ Ship.prototype.updateCenterOfMass=function(){
 };
 
 var Vessel=function(Parts,name){
+	//a Vessel is a blueprint to make a Ship out of
+	// IMPORTANT A VESSEL NEEDS MASS AND CENTER OF MASS UPDATED WHEN SAVED
+	//  (actually all the time as things are adjusted)
 	Parts? this.Parts=Parts : this.Parts=[];
 	this.type="Vessel";
 
@@ -109,6 +118,8 @@ var Vessel=function(Parts,name){
 
 Vessel.prototype.updateMass=Ship.prototype.updateMass;
 Vessel.prototype.updateCenterOfMass=Ship.prototype.updateCenterOfMass;
+
+//BELOW HERE IS WHERE I AM NOT SURE WHAT I AM DOING
 
 var Part=function(mass,color,name){
 	//parts don't have x/y/rotation because a part is a definition for use in a Vessel,

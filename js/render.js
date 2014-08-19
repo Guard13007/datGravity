@@ -56,17 +56,13 @@ var Render={
 					a.width*Render.scale,a.height*Render.scale);
 				Render.context.rotate(-a.rotation);
 				Render.context.translate(-a.x*Render.scale,-a.y*Render.scale);
-				/*Render.context.fillRect(a.x*Render.scale,a.y*Render.scale,
-					a.width*Render.scale,a.height*Render.scale);*/
 			});
 			Render.context.rotate(-b.rotation);
 			Render.context.translate(-Fx,-Fy);
 		} else {
 			console.log("Invalid type:",b);
 		}
-	}/*,
-	canvas:null, //set on load
-	context:null //set on load*/
+	}
 };
 
 addEventHandler(window,'load',function(){

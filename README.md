@@ -4,7 +4,7 @@ datGravity
 Welcome to datGravity, a complete restart to [gravity](http://github.com/Guard13007/gravity).
 
 datGravity is a simple 2D gravitational simulation with aspirations of being a
-cool game.
+cool game. With ships and planets and space stations to fly, orbit, land, mine, and science.
 
 It is recommended you do not change stuff outside of Render Settings, as changes
 outside of there will cause weird things to happen and/or break.
@@ -39,3 +39,8 @@ Known Bugs
 ----------
 
 - Render / controls freak out if you modify focusID while focusType is ship.
+
+#### stuff do
+
+- debug.js, environment.js, functions.js, main.js, random.js, rendering.js, variables.js,
+  todo.md, Console.md, README.md, everything above JS folder

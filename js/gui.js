@@ -30,6 +30,7 @@ var GUI={
 		gui.render=gui.main.addFolder('Render Settings');
 		gui.render.add(Render,'iterationDelay',{Max:1,'60':17,'30':33,'10':100,Min:2000}).name("FPS");
 		gui.render.add(Render,'renderType',{normal:'normal','pseudo 3D':'3D','1D':'side'});
+		gui.render.add(Render,'angle3D',0,360).step(1).name("3D Angle");
 		gui.render.add(Render,'fade');
 		gui.render.add(Render,'fadeAlpha',0.01,1).step(0.01);
 		gui.render.add(Render,'focusType',['body','ship']);

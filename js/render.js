@@ -3,6 +3,7 @@ console.log("Render loading.");
 var Render={
 	iterationDelay:1,//33,
 	renderType:'normal',
+	angle3D:145,//280,
 	fade:true,//false,
 	fadeAlpha:0.01,//0.03,
 	focusType:'body',//'ship',
@@ -26,25 +27,24 @@ var Render={
 				var Fy=(b.y-Game.system.ships[Render.focusID].y)*Render.scale+Render.canvas.height/2;
 			} else {
 				console.log("Invalid Render settings, rendering at Origin.");
-				//Render.focusType='body';	Render.focusID=0;
 				var Fx=0;	var Fy=0;
 			}
 		} else if (Render.renderType=='3D'){
 			if (Render.focusType=='body' && Game.system.bodies[Render.focusID]){
-				var Tx=b.x-Game.system.bodies[Render.focusID].x*Render.scale;
-				var Ty=b.y-Game.system.bodies[Render.focusID].y*Render.scale;
+				var Tx=(b.x-Game.system.bodies[Render.focusID].x)*Render.scale;
+				var Ty=(b.y-Game.system.bodies[Render.focusID].y)*Render.scale;
 			} else if (Render.focusType=='ship' && Game.system.ships[Render.focusID]){
-				var Tx=b.x-Game.system.bodies[Render.focusID].x*Render.scale;
-				var Ty=b.y-Game.system.bodies[Render.focusID].y*Render.scale;
+				var Tx=(b.x-Game.system.bodies[Render.focusID].x)*Render.scale;
+				var Ty=(b.y-Game.system.bodies[Render.focusID].y)*Render.scale;
 			} else {
 				console.log("Invalid Render settings, rendering at Origin.");
 				var Fx=0;	var Fy=0;
 			}
 			//New X=x*cos(r)-y*sin(r)	New Y=x*sin(r)+y*cos(r)
-			var Fx=Tx*Math.cos(30)-Ty*Math.sin(30)+Render.canvas.width/2;
-			var Fy=Ty*Math.sin(30)+Ty*Math.cos(30)+Render.canvas.height/2;
+			var Fx=Tx*Math.cos(Math.toRadians(Render.angle3D))-Ty*Math.sin(Math.toRadians(Render.angle3D))+Render.canvas.width/2;
+			var Fy=Ty*Math.sin(Math.toRadians(Render.angle3D))+Ty*Math.cos(Math.toRadians(Render.angle3D))+Render.canvas.height/2;
 		} else if (Render.renderType=='side'){
-			Fx=b.x-Game.system.bodies[Render.focusID].x*Render.scale+Render.canvas.width/2;
+			Fx=(b.x-Game.system.bodies[Render.focusID].x)*Render.scale+Render.canvas.width/2;
 			Fy=Render.canvas.height/2;
 		}
 		if (b.type=='Planetoid' || b.type=='Asteroid' || b.type=='Planet' || b.type=='Moon' || b.type=='GasGiant'){

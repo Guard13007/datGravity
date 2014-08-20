@@ -638,11 +638,11 @@ function getPeriapsis(parent,child) {return 2*getSemiMajorAxis(parent,child)-get
 			else throw "No method to addEvent.";
 		},
 		keysHeld:[],
-		keyDown:	function(evemt){
+		keyDown:	function(event){
 			var code=event.keyCode? event.keyCode : event.charCode;
 			io.keysHeld[code]=true;
 		},
-		keyUp:		function(evemt){
+		keyUp:		function(event){
 			var code=event.keyCode? event.keyCode : event.charCode;
 			io.keysHeld[code]=false;
 		},

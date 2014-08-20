@@ -25,13 +25,26 @@ var Render={
 				var Fx=(b.x-Game.system.ships[Render.focusID].x)*Render.scale+Render.canvas.width/2;
 				var Fy=(b.y-Game.system.ships[Render.focusID].y)*Render.scale+Render.canvas.height/2;
 			} else {
-				console.log("Invalid Render settings, rendering at Origin."/*,Render*/);
+				console.log("Invalid Render settings, rendering at Origin.");
 				//Render.focusType='body';	Render.focusID=0;
 				var Fx=0;	var Fy=0;
 			}
 		} else if (Render.renderType=='3D'){
-			//
+			if (Render.focusType=='body' && Game.system.bodies[Render.focusID]){
+				var Tx=b.x-Game.system.bodies[Render.focusID].x*Render.scale;
+				var Ty=b.y-Game.system.bodies[Render.focusID].y*Render.scale;
+			} else if (Render.focusType=='ship' && Game.system.ships[Render.focusID]){
+				var Tx=b.x-Game.system.bodies[Render.focusID].x*Render.scale;
+				var Ty=b.y-Game.system.bodies[Render.focusID].y*Render.scale;
+			} else {
+				console.log("Invalid Render settings, rendering at Origin.");
+				var Fx=0;	var Fy=0;
+			}
+			//New X=x*cos(r)-y*sin(r)	New Y=x*sin(r)+y*cos(r)
+			var Fx=Tx*Math.cos(30)-Ty*Math.sin(30)+Render.canvas.width/2;
+			var Fy=Ty*Math.sin(30)+Ty*Math.cos(30)+Render.canvas.height/2;
 		} else if (Render.renderType=='side'){
+			Fx=b.x-Game.system.bodies[Render.focusID].x*Render.scale+Render.canvas.width/2;
 			Fy=Render.canvas.height/2;
 		}
 		if (b.type=='Planetoid' || b.type=='Asteroid' || b.type=='Planet' || b.type=='Moon' || b.type=='GasGiant'){
@@ -56,12 +69,35 @@ var Render={
 					a.width*Render.scale,a.height*Render.scale);
 				Render.context.rotate(-a.rotation);
 				Render.context.translate(-a.x*Render.scale,-a.y*Render.scale);
+				//end draw/assumption for the part
 			});
 			Render.context.rotate(-b.rotation);
 			Render.context.translate(-Fx,-Fy);
+			//Render.drawShip(b);
 		} else {
-			console.log("Invalid type:",b);
+			console.log("Invalid Body type:",b);
 		}
+	},
+	drawPlanetoid:function(){
+		//
+	},
+	drawShip:function(b){
+		/*Render.context.translate(Fx,Fy);
+		Render.context.rotate(b.rotation);
+		forEach(b.Parts,function(a){
+			Render.context.beginPath();
+			Render.context.fillStyle='rgba('+a.color[0]+','+a.color[1]+','+a.color[2]+','+a.color[3]+')';
+			//right now assumes each object making up a Ship is a rect
+			Render.context.translate(a.x*Render.scale,a.y*Render.scale);
+			Render.context.rotate(a.rotation);
+			Render.context.fillRect(-a.width*Render.scale/2,-a.height*Render.scale/2,
+				a.width*Render.scale,a.height*Render.scale);
+			Render.context.rotate(-a.rotation);
+			Render.context.translate(-a.x*Render.scale,-a.y*Render.scale);
+			//end draw/assumption for the part
+		});
+		Render.context.rotate(-b.rotation);
+		Render.context.translate(-Fx,-Fy);*/
 	}
 };
 

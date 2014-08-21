@@ -50,7 +50,7 @@ var Render={
 		if (b.type=='Planetoid' || b.type=='Asteroid' || b.type=='Planet' || b.type=='Moon' || b.type=='GasGiant'){
 			Render.context.beginPath();
 			Render.context.fillStyle='rgba('+b.color[0]+','+b.color[1]+','+b.color[2]+','+b.color[3]+')';
-			var r=b.radius*Render.scale; if (r<0.5) r=1;
+			var r=b.radius*Render.scale; if (r<0.5) r=0.5;
 			/*Render.context.translate(Fx,Fy);
 			Render.context.arc(0,0,r,0+b.rotation,Math.Tau+b.rotation);
 			Render.context.translate(-Fx,-Fy);*/

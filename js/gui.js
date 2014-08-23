@@ -19,25 +19,24 @@ var GUI={
 
 		//Functions
 		gui.functions=gui.main.addFolder('Functions');
-		var b=gui.functions.add(Game,'running');
-		b.onChange(function(v){
-			if (v) Game.loop();
-		});
+		gui.functions.add(Game,'running').onChange(function(v){if(v)Game.loop();});
 		gui.functions.add(Game,'generateNewSystem').name("New System");
-		gui.functions.add(Game,'generateAsteroids').name("Random Asteroids");
+		gui.functions.add(Game,'generateAsteroids').name("Random Asteroids").onChange(function(){Render.redraw();});
+		//gui.functions.add(Render,'redraw');
 
 		//Render Settings
 		gui.render=gui.main.addFolder('Render Settings');
 		gui.render.add(Render,'iterationDelay',{Max:1,'60':17,'30':33,'10':100,Min:2000}).name("FPS");
-		gui.render.add(Render,'renderType',{normal:'normal','pseudo 3D':'3D','1D':'side'});
-		gui.render.add(Render,'angle3D',0,360).step(1).name("3D Angle");
+		gui.render.add(Render,'renderType',{normal:'normal','pseudo 3D':'3D','1D':'side'}).onChange(function(){Render.redraw();});
+		gui.render.add(Render,'angle3D',0,360).step(1).name("3D Angle").onChange(function(){Render.redraw();});
 		gui.render.add(Render,'fade');
 		gui.render.add(Render,'fadeAlpha',0.01,1).step(0.01);
-		gui.render.add(Render,'focusType',['body','ship']);
-		gui.render.add(Render,'focusID').name("Render Focus ID");
-		gui.render.add(Render,'scale',0.5,10).step(0.1).name("Scale (close)");
-		gui.render.add(Render,'scale',0.001,0.05).step(0.001).name("Scale (med)");
-		gui.render.add(Render,'scale',0.0001,0.001).step(0.0001).name("Scale (far)");
+		gui.render.add(Render,'focusType',['body','ship']).onChange(function(){Render.redraw();});
+		gui.render.add(Render,'focusID').name("Render Focus ID").onChange(function(){Render.redraw();});
+		gui.render.add(Render,'scale',0.5,10).step(0.1).name("Scale (close)").onChange(function(){Render.redraw();});
+		gui.render.add(Render,'scale',0.001,0.05).step(0.001).name("Scale (med)").onChange(function(){Render.redraw();});
+		gui.render.add(Render,'scale',0.0001,0.001).step(0.0001).name("Scale (far)").onChange(function(){Render.redraw();});
+		gui.render.add(Render,'minRadius',0.1,1).step(0.1);//.onChange(function(){Render.redraw();});
 
 		//Physics Settings
 		gui.physics=gui.main.addFolder('Physics Settings');

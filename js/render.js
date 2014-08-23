@@ -9,12 +9,13 @@ var Render={
 	focusType:'body',//'ship',
 	focusID:0,
 	scale:0.0005,//0.8,
-	clear:function(){
-		if (Render.fade) {
+	minRadius:0.1,//0.5,
+	clear:function(skipFade){
+		if (skipFade || !Render.fade){
+			Render.context.clearRect(0,0,Render.canvas.width,Render.canvas.height);
+		} else {
 			Render.context.fillStyle='rgba(0,0,0,'+Render.fadeAlpha+')';
 			Render.context.fillRect(0,0,Render.canvas.width,Render.canvas.height);
-		} else {
-			Render.context.clearRect(0,0,Render.canvas.width,Render.canvas.height);
 		}
 	},
 	draw:function(b){
@@ -50,7 +51,7 @@ var Render={
 		if (b.type=='Planetoid' || b.type=='Asteroid' || b.type=='Planet' || b.type=='Moon' || b.type=='GasGiant'){
 			Render.context.beginPath();
 			Render.context.fillStyle='rgba('+b.color[0]+','+b.color[1]+','+b.color[2]+','+b.color[3]+')';
-			var r=b.radius*Render.scale; if (r<0.5) r=0.5;
+			var r=b.radius*Render.scale; if (r<Render.minRadius) r=Render.minRadius;
 			/*Render.context.translate(Fx,Fy);
 			Render.context.arc(0,0,r,0+b.rotation,Math.Tau+b.rotation);
 			Render.context.translate(-Fx,-Fy);*/
@@ -77,6 +78,11 @@ var Render={
 		} else {
 			console.log("Invalid Body type:",b);
 		}
+	},
+	redraw:function(){
+		Render.clear(true);
+		forEach(Game.system.bodies,function(b){Render.draw(b);});
+		forEach(Game.system.ships,function(b){Render.draw(b);});
 	},
 	drawPlanetoid:function(){
 		//

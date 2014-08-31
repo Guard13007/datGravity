@@ -20,8 +20,8 @@ var GUI={
 		//Functions
 		gui.functions=gui.main.addFolder('Functions');
 		gui.functions.add(Game,'running').onChange(function(v){if(v)Game.loop();});
-		gui.functions.add(Game,'generateNewSystem').name("New System");
-		gui.functions.add(Game,'generateAsteroids').name("Random Asteroids").onChange(function(){Render.redraw();});
+		gui.functions.add(Game,'generateNewSystem').name("New System").onChange(function(){Render.redraw();});
+		gui.functions.add(Game,'generateAsteroids').name("Random Asteroids");
 		//gui.functions.add(Render,'redraw');
 
 		//Render Settings

@@ -48,7 +48,7 @@ var Render={
 			Fx=(b.x-Game.system.bodies[Render.focusID].x)*Render.scale+Render.canvas.width/2;
 			Fy=Render.canvas.height/2;
 		}
-		if (b.type=='Planetoid' || b.type=='Asteroid' || b.type=='Planet' || b.type=='Moon' || b.type=='GasGiant'){
+		if (b.type=='Planetoid' || b.type=='Asteroid' || b.type=='Moon' || b.type=='Planet' || b.type=='GasGiant' || b.type=='Star'){
 			Render.context.beginPath();
 			Render.context.fillStyle='rgba('+b.color[0]+','+b.color[1]+','+b.color[2]+','+b.color[3]+')';
 			var r=b.radius*Render.scale; if (r<Render.minRadius) r=Render.minRadius;
@@ -107,7 +107,7 @@ var Render={
 	}
 };
 
-addEventHandler(window,'load',function(){
+io.addEvent('load',function(){
 	Render.canvas=document.getElementById('canvas');
 	Render.canvas.width=window.innerWidth;
 	Render.canvas.height=window.innerHeight;
@@ -115,7 +115,7 @@ addEventHandler(window,'load',function(){
 	console.log("Render loaded.");
 });
 
-addEventHandler(window,'resize',function(){
+io.addEvent('resize',function(){
 	Render.canvas.width=window.innerWidth;
 	Render.canvas.height=window.innerHeight;
 });

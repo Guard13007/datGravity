@@ -43,13 +43,6 @@ var Asteroid=function(x,y,rotationSpeed,name){
 	this.type="Asteroid";
 };
 
-var Planet=function(x,y,rotationSpeed,name){
-	// a Planet is a medium Body
-	var color=[255,255,255,1]; //temporary
-	Planetoid.call(this,random.number(289,404),x,y,color,rotationSpeed,name);
-	this.type="Planet";
-};
-
 var Moon=function(x,y,rotationSpeed,name){
 	// a Moon orbits a Planet or GasGiant
 	var color=[255,255,255,1]; //temporary
@@ -57,11 +50,55 @@ var Moon=function(x,y,rotationSpeed,name){
 	this.type="Moon";
 };
 
+var Planet=function(x,y,rotationSpeed,name){
+	// a Planet is a medium Body
+	var color=[255,255,255,1]; //temporary
+	Planetoid.call(this,random.number(289,404),x,y,color,rotationSpeed,name);
+	this.type="Planet";
+};
+
 var GasGiant=function(x,y,rotationSpeed,name){
 	// a GasGiant is huge, but not a star
 	var color=[255,255,255,1]; //temporary
 	Planetoid.call(this,random.number(666,1313),x,y,color,rotationSpeed,name);
 	this.type="GasGiant";
+};
+
+var Star=function(x,y,rotationSpeed,name){
+	// a Star is a giant ball of nuclear fusion
+	var red,green,blue;
+	var c=random.integer(0,32);
+	if(c<=16){			//red
+		// r 228+, g/b <= 10
+		red=random.integer(228,255);
+		green=random.integer(0,10);
+		blue=random.integer(0,10);
+	}else if (c>=17 && c<=24){	//yellow
+		// r/g equal (+/-3), 228+, b <= 10
+		red=random.integer(228,255);
+		green=red+random.integer(-3,3);
+		if (green>255) green=255;
+		blue=random.integer(0,10);
+	}else if (c>=25 && c<=27){	//blue
+		// r/g <= 10, b 200+
+		red=random.integer(0,10);
+		green=random.integer(0,10);
+		blue=random.integer(200,255);
+	}else if (c>=28 && c<=31){	//orange
+		// r 200+, g 165+, b <= 10
+		red=random.integer(200,255);
+		green=random.integer(165,255);
+		blue=random.integer(0,10);
+	}else if (c==32){	//aqua
+		// r <= 10, g/b equal 228+ (+/-3)
+		red=random.integer(0,10);
+		green=random.integer(228,255);
+		blue=green+random.integer(-3,3);
+		if (blue>255) blue=255;
+	}
+	var color=[red,green,blue,1];
+	Planetoid.call(this,random.number(6000,13000),x,y,color,rotationSpeed,name);
+	this.type="Star";
 };
 
 var Ship=function(Vessel,x,y,rotation,rotationSpeed,name){

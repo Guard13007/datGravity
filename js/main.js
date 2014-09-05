@@ -117,9 +117,7 @@ var System=function(count){
 	this.ships=[];
 	this.bodies=[];
 	//create star
-	this.bodies.push(
-		new Planetoid(random.number(6000,13000),0,0,new StarColor(),0,"star")
-	);
+	this.bodies.push(new Star(0,0,0,"star"));
 	//create count-1 bodies orbiting star
 	var p;
 	for (var i=1;i<count;i++){
@@ -176,64 +174,3 @@ var System=function(count){
 	physics.setOrbit(this.bodies[0],this.bodies[1]);
 	physics.setOrbit(this.bodies[0],this.bodies[2]);*/
 };
-
-function StarColor(){
-	//make a Star() constructor and place this in that
-	var red,green,blue;
-	var color=random.integer(0,9);
-	switch(color){
-		case 0: //red
-		case 1: case 2: case 3:
-			//228+, g/b under 10
-			red=random.integer(228,255);
-			green=random.integer(0,10);
-			blue=random.integer(0,10);
-			break;
-		case 4: //yellow
-		case 5:
-			// red and green equal +/- 3, 228 and up
-			// no blue (under 10)
-			red=random.integer(228,255);
-			green=red+random.integer(-3,3);
-			if (green>255) green=255;
-			blue=random.integer(0,10);
-			break;
-		case 6: //blue
-			//red/green 40-, blue 200+
-			red=random.integer(0,10);
-			green=random.integer(0,10);
-			blue=random.integer(200,255);
-			break;
-		case 7: //orange
-		case 8:
-			//red 200 and up
-			//green can only be 165 and up
-			//NO BLUE (blue under 10)
-			red=random.integer(200,255);
-			green=random.integer(165,255);
-			blue=random.integer(0,10);
-			break;
-		case 9: //aqua
-			//NO RED
-			//green/blue same color 228+
-			red=random.integer(0,10);
-			green=random.integer(228,255);
-			blue=green+random.integer(-3,3);
-			if (blue>255) blue=255;
-			break;
-	}
-	this[0]=red;
-	this[1]=green;
-	this[2]=blue;
-	this[3]=1;
-	return [red,green,blue,1];
-}
-/*function PlanetColor(){
-	//
-}
-function MoonColor(){
-	//
-}
-function GasGiantColor(){
-	//
-}*/

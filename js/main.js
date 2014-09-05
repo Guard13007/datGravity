@@ -1,10 +1,12 @@
 var Game={
 	start:function(){
+		Game.gui.destroy();
 		Game.generateNewSystem();
 		Game.temporaryShittyShip();
 		Game.loop();
 	},
 	running:true,
+	gui:null,
 	generateNewSystem:function(){
 		Render.clear(true);
 		Game.system=new System(random.integer(13,31));
@@ -98,19 +100,16 @@ var Game={
 	}
 };
 
-addEventHandler(window,'load',load);/*function(){
-	Game.generateNewSystem();
-	setTimeout(Game.loop,100); //this has a timer because of loading errors, I need to figure out and fix this
-});*/
-
 function load(){
 	if (typeof(Game)==='undefined' || typeof(Render)==='undefined' || typeof(Render.canvas)==='undefined') {
 		console.log("Not ready. (function: load)");
 		setTimeout(load,100);
 		return;
 	}
-	Game.start(); //replace with call to display a main menu, which will have a start button
+	Game.gui=new dat.GUI();
+	Game.gui.add(Game,'start').name("Start Simulation");
 }
+io.addEvent('load',load);
 
 var System=function(count){
 	//properties

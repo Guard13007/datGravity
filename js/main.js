@@ -1,8 +1,17 @@
 var Game={
+	start:function(){
+		Game.generateNewSystem();
+		Game.temporaryShittyShip();
+		Game.loop();
+	},
 	running:true,
 	generateNewSystem:function(){
 		Render.clear(true);
-		Game.system=new System(random.integer(13,31)); //system generation should be written so that 23 bodies will average a gas giant, six planets, five moons, and eleven asteroids
+		Game.system=new System(random.integer(13,31));
+		//system generation should be written so that 23 bodies will average
+		//        a gas giant, six planets, five moons, and eleven asteroids
+	},
+	temporaryShittyShip:function(){
 		/*Game.system.ships[0]=new Ship("test",
 			[new Tank(-2,-4,4,8,[255,255,0,1]),new Tank(-4,-2,8,4,[255,0,0,0.8])],
 			250,0);//new Ship(250,0,4,8);*/
@@ -100,8 +109,7 @@ function load(){
 		setTimeout(load,100);
 		return;
 	}
-	Game.generateNewSystem();
-	Game.loop();
+	Game.start(); //replace with call to display a main menu, which will have a start button
 }
 
 var System=function(count){

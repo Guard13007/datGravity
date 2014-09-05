@@ -47,8 +47,8 @@ var Game={
 		var r=random.integer(1,5);			//how many
 		for (var i=0;i<r;i++){
 			var c=random.integer(21,169);	//color
-			//generated up to canvas.width*2 away from center
-			var m=random.number(0,Render.canvas.width*2);
+			//generated up to canvas.width*2/Render.scale away from center
+			var m=random.number(0,Render.canvas.width*2/Render.scale);
 			var d=random.number(0,Math.Tau);
 			//NOTE TO SELF, IF STUFF IS NOT ORBITING 0x0, THIS WILL BE INCORRECT
 			var b=new Planetoid(random.number(0.5,40),Math.cos(d)*m,Math.sin(d)*m,

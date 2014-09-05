@@ -692,6 +692,12 @@ function getPeriapsis(parent,child) {return 2*getSemiMajorAxis(parent,child)-get
 				element.attachEvent('on'+eventType,handler);
 			else throw "No method to addEvent.";
 		},
+		//stuff
+		cancelBubble:function(e){
+			var evt = e ? e:window.event;
+			if (evt.stopPropagation) evt.stopPropagation();
+			if (evt.cancelBubble!=null) evt.cancelBubble=true;
+		},
 		//FORMAT
 		//	function to repeat
 		//	timing to use

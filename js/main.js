@@ -66,7 +66,6 @@ var Game={
 				[c,c,c,1],0,"asteroid");
 			physics.setOrbit(Game.system.bodies[0],b);
 			Game.system.bodies.push(b);
-			if (typeof(GUI!=='undefined')) GUI.addBody(Game.system.bodies[Game.system.bodies.length-1]);
 		}
 	},
 	loop:function(){
@@ -106,6 +105,7 @@ function load(){
 		setTimeout(load,100);
 		return;
 	}
+	console.log("Game loaded. (function: load)");
 	Game.gui=new dat.GUI();
 	Game.gui.add(Game,'start').name("Start Simulation");
 }

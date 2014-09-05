@@ -1,5 +1,11 @@
 console.log("GUI loading.");
 
+// This system is a temporary GUI intended for use during development only.
+// In the finished version any dat.GUI objects should be from other files and have nothing to do with this file.
+// This file and what it does is completely optional.
+var gui={
+	inspectorEnabled:false
+};
 var GUI={
 	load:function(){
 		//check if everything else loaded, else wait 10th of a second
@@ -9,19 +15,23 @@ var GUI={
 			return;
 		}
 		//set up the dat.GUI
-		gui={};
 		gui.main=new dat.GUI();
 		gui.main.remember(Game);
 		gui.main.remember(Render);
 		gui.main.remember(physics);
 		gui.main.add(Game.system,'focusID').name("Player Focus ID");
-		//gui.main.remember(Game.system.bodies);
 
 		//Functions
 		gui.functions=gui.main.addFolder('Functions');
 		gui.functions.add(Game,'running').onChange(function(v){if(v)Game.loop();});
 		gui.functions.add(Game,'generateNewSystem').name("New System").onChange(function(){Render.redraw();});
 		gui.functions.add(Game,'generateAsteroids').name("Random Asteroids");
+		gui.functions.add(gui,'inspectorEnabled').onChange(function(){
+			if(gui.inspectorEnabled)
+				GUI.activateInspector();
+			else
+				gui.inspector.destroy();
+		});
 		//gui.functions.add(Render,'redraw');
 
 		//Render Settings
@@ -43,6 +53,10 @@ var GUI={
 		gui.physics.add(physics,'G',0.1,1).step(0.1).name("Grav Constant");
 		gui.physics.add(physics,'timeStep',0.1,1).step(0.1);
 		console.log("GUI loaded.");
+	},
+	activateInspector:function(){
+		gui.inspector=new dat.GUI();
+		//add something so when a body is clicked it is added to the inspector
 
 		//this needs to be redone somehow to account for bodies being removed or added or replaced
 		//I HATE THE WAY THIS WORKS
@@ -62,11 +76,6 @@ var GUI={
 			gui.bodyVelocities[gui.bodyVelocities.length-1].add(b.v,'x');
 			gui.bodyVelocities[gui.bodyVelocities.length-1].add(b.v,'y');
 		});*/
-	},
-	addBody:function(b){
-		//do stuff!
-		//not even sure I'm going to use this? it is supposed to add a Body to the GUI,
-		//  but we will be removing Bodies from the GUI
 	}
 };
 GUI.load();

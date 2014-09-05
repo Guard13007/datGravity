@@ -1,10 +1,12 @@
 console.log("IO loading.");
 
-io.addEvent('keydown',function(e){
-	io.keyDown(e);
-	console.log(e.keyCode); //lazy way of doing this
+io.addEvent('load',function(){
+	io.addEvent('keydown',function(e){
+		io.keyDown(e);
+		console.log(e.keyCode); //lazy way of doing this? what does this comment even mean?
+	},Render.canvas);
+	io.addEvent('keyup',io.keyUp,Render.canvas);
 });
-io.addEvent('keyup',io.keyUp);
 
 function checkInput(){
 	//MASSIVELY NEEDS REWRITE, probably needs to be more incorporated

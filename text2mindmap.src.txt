@@ -1,0 +1,54 @@
+document
+	gui
+		inspectorEnabled: bool
+		main: dat.GUI, debug tool
+		functions: dat.GUI folder
+		render: dat.GUI folder
+		physics: dat.GUI folder
+	GUI
+		load: function
+		activateInspector: function, unfinished
+	Images
+		fx
+			rcs: Image()
+		loaded: bool
+		error: bool
+	checkInput: function, temporary
+	onload event
+		io.keyDown appended to Render.canvas
+		io.keyUp appended to Render.canvas
+		load is called
+	Game
+		start: function
+		running: bool
+		gui: dat.GUI (?)
+		generateNewSystem: function
+		temporaryShittyShip: function (temp)
+		generateAsteroids: function (temp?)
+		loop: function (main loop)
+	load: function (named because needs at least two calls)
+	System: constructor
+		focusID: Number
+		ships: Array
+		bodies: Array
+	Body: constructor
+		x: Number
+		y: Number
+		rotation: Number
+		rotationSpeed: Number
+		v: physics.vector()
+		type: "Body"
+		name: string
+		mass: Number
+		getVelocity: function, unfinished
+		getOriginDistance: function, unfinished
+	Planetoid: constructor
+		type: "Planetoid"
+		radius: Number
+		mass: Number
+		color: Array
+			0: red
+			1: green
+			2: blue
+			3: alpha
+	Asteroid

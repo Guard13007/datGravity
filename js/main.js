@@ -122,17 +122,12 @@ var System=function(count){
 	var p;
 	for (var i=1;i<count;i++){
 		//TEMPORARY COMPLETE SHIT RANDOM PLACEMENT:
-		var m=random.number(this.bodies[0].radius*1.1,Render.canvas.width*1000);
+		// edited to be slightly better based on Render.scale
+		// note that this method actually prevents spawning Planetoids in the Star
+		var m=random.number(this.bodies[0].radius*1.1,Render.canvas.width/Render.scale);
 		var d=random.number(0,Math.Tau);
 		var x=Math.cos(d)*m;	var y=Math.sin(d)*m;
-		/*
-		//generated up to canvas.width*2 away from center
-			var m=random.number(0,Render.canvas.width*2);
-			var d=random.number(0,Math.Tau);
-			//NOTE TO SELF, IF STUFF IS NOT ORBITING 0x0, THIS WILL BE INCORRECT
-			var b=new Planetoid(random.number(0.5,40),Math.cos(d)*m,Math.sin(d)*m,
-
-		*/
+		//IMPROVE DISTRIBUTION
 		var r=random.integer(0,3); //determine type of body
 		switch(r){
 			case 0: //planet
@@ -147,30 +142,8 @@ var System=function(count){
 			case 3: //gas giant
 				p=new GasGiant(x,y,0,"giant");
 				break;
-			/*case 0: //planet
-				p=new Planetoid(random.number(289,404),x,y,new PlanetColor(),0,"planet");
-				break;
-			case 1: //moon
-				p=new Planetoid(random.number(81,149),x,y,new MoonColor(),0,"moon");
-				break;
-			case 2: //asteroid
-				var c=random.integer(21,169)
-				p=new Planetoid(random.number(0.5,40),x,y,[c,c,c,1],0,"asteroid");
-				break;
-			case 3: //gas giant
-				p=new Planetoid(random.number(666,1313),x,y,new GasGiantColor(),0,"giant");
-				break;*/
 		}
-		//var p=new Planetoid();
 		physics.setOrbit(this.bodies[0],p);
 		this.bodies.push(p);
 	}
-	//radius,x,y,color,rotationSpeed,name
-
-	//tmp for testing
-	/*this.bodies[0]=new Planetoid(200,0,0,[255,0,0,0.5]);
-	this.bodies[1]=new Planetoid(10,200,567,[0,0,255,1]);
-	this.bodies[2]=new Planetoid(0,29,300,[255,255,0,1]);
-	physics.setOrbit(this.bodies[0],this.bodies[1]);
-	physics.setOrbit(this.bodies[0],this.bodies[2]);*/
 };

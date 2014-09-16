@@ -5,11 +5,29 @@ if (typeof(physics)==='undefined') {
 }
 
 //Redefine constants
-physics.G=1;//0.4;
-physics.timeStep=1;//0.1;
+physics.G=5;//0.4;
+physics.timeStep=5;//0.1;
 
 //Define new constants
 physics.PlanetoidDensity=2.7;
+
+//redefine for physics.setOrbit() as this is much closer to accurate
+physics.setOrbit=function(parent,child,retrograde){
+	var Nx=false;	var Ny=false;	//flags for negatives
+	var Dx=parent.x-child.x;		//get distance
+	var Dy=parent.y-child.y;
+	if (Dx<0){Nx=true;Dx=-Dx;}		//fix signs for calculations
+	if (Dy<0){Ny=true;Dy=-Dy;}
+	var distance=Math.sqrt(Dx*Dx+Dy*Dy);
+	var velocity=Math.sqrt(physics.G*(parent.mass+child.mass)/distance);
+	var Ax=Dx*velocity/(Dx+Dy);		//split velocity into x/y
+	var Ay=velocity-Ax;
+	if (!retrograde){				//make orbits counterclockwise
+		if (Nx) Ax=-Ax;
+		if (Ny) Ay=-Ay;}
+	child.v.x=-Ay+parent.v.x;		//apply at right angle to balance against gravity
+	child.v.y=Ax+parent.v.y;
+};
 
 //combine bodies
 physics.combine=function(a,b){

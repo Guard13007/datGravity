@@ -50,8 +50,8 @@ var GUI={
 
 		//Physics Settings
 		gui.physics=gui.main.addFolder('Physics Settings');
-		gui.physics.add(physics,'G',0.1,1).step(0.1).name("Grav Constant");
-		gui.physics.add(physics,'timeStep',0.1,1).step(0.1);
+		gui.physics.add(physics,'G',0.1,5).step(0.1).name("Grav Constant");
+		gui.physics.add(physics,'timeStep',0.1,5).step(0.1);
 		console.log("GUI loaded.");
 	},
 	activateInspector:function(){

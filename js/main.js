@@ -9,7 +9,8 @@ var Game={
 	gui:null,
 	generateNewSystem:function(){
 		Render.clear(true);
-		Game.system=new System(random.integer(13,31));
+		//Game.system=new System(random.integer(13,31));
+		Game.system=new System(2);
 		//system generation should be written so that 23 bodies will average
 		//        a gas giant, six planets, five moons, and eleven asteroids
 	},

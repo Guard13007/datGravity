@@ -9,7 +9,7 @@ var Render={
 	focusType:'body',//'ship',
 	focusID:0,
 	scale:0.0005,//0.8,
-	minRadius:0.1,//0.5,
+	minRadius:0.3,//0.5, //probably will not revert to old value
 	clear:function(skipFade){
 		if (skipFade || !Render.fade){
 			Render.context.clearRect(0,0,Render.canvas.width,Render.canvas.height);

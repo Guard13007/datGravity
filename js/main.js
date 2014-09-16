@@ -1,3 +1,17 @@
+/**
+ * @namespace
+ * @description Contains/controls primary game components as well as currently active simulation.
+ * @property {function} start - Starts a new game.
+ * @property {boolean} running - Whether system is currently being simulated or not.
+ * @todo Rename running to universeSimulating, as game will always be running, but universe simulation is only certain times.
+ * @property {dat.GUI} gui - Null to start, will contain a GUI for the game once it has loaded up.
+ * @todo Remember what the fuck the Game.gui actually does.
+ * @property {function} generateNewSystem - Generates a new system.
+ * @todo Make generateNewSystem generate one without destroying or replacing the current. It should give info and ask if you want to warp there / travel there somehow / switch to your base there.
+ * @property {function} temporaryShittyShip - Creates a basic Ship that works right now but will probably break in the future and is already slightly broken and temporary overall anyhow.
+ * @property {function} generateAsteroids - Generates some asteroids in the system randomly.
+ * @property {function} loop - Main simulation loop, applies velocity, gravity, checks for input, renders.
+ */
 var Game={
 	start:function(){
 		Game.gui.destroy();
@@ -100,6 +114,7 @@ var Game={
 	}
 };
 
+/** @description Loads Game.gui when able. */
 function load(){
 	if (typeof(Game)==='undefined' || typeof(Render)==='undefined' || typeof(Render.canvas)==='undefined') {
 		console.log("Not ready. (function: load)");
@@ -112,6 +127,10 @@ function load(){
 }
 io.addEvent('load',load);
 
+/**
+ * @constructor
+ * @param {number} count - How many Bodies to generate. Minimum 2.
+ */
 var System=function(count){
 	//properties
 	this.focusID=0;

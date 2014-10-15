@@ -56,6 +56,11 @@ var GUI={
 	},
 	activateInspector:function(){
 		gui.inspector=new dat.GUI();
+		io.addEvent('mousedown',function(e){
+			var x=io.getMouseX(e);
+			var y=io.getMouseY(e);
+		});
+		//Render.canvas / Render.context
 		//add something so when a body is clicked it is added to the inspector
 
 		//this needs to be redone somehow to account for bodies being removed or added or replaced

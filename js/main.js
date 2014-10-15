@@ -124,6 +124,8 @@ function load(){
 	console.log("Game loaded. (function: load)");
 	Game.gui=new dat.GUI();
 	Game.gui.add(Game,'start').name("Start Simulation");
+	//temporary: skip the start
+	Game.start();
 }
 io.addEvent('load',load);
 

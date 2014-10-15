@@ -19,6 +19,7 @@ var Render={
 		}
 	},
 	draw:function(b){
+		//--/-/-//-/-//---///-/-///--//-
 		if (Render.renderType=='normal'){
 			if (Render.focusType=='body' && Game.system.bodies[Render.focusID]){
 				var Fx=(b.x-Game.system.bodies[Render.focusID].x)*Render.scale+Render.canvas.width/2;
@@ -45,9 +46,10 @@ var Render={
 			var Fx=Tx*Math.cos(Math.toRadians(Render.angle3D))-Ty*Math.sin(Math.toRadians(Render.angle3D))+Render.canvas.width/2;
 			var Fy=Ty*Math.sin(Math.toRadians(Render.angle3D))+Ty*Math.cos(Math.toRadians(Render.angle3D))+Render.canvas.height/2;
 		} else if (Render.renderType=='side'){
-			Fx=(b.x-Game.system.bodies[Render.focusID].x)*Render.scale+Render.canvas.width/2;
-			Fy=Render.canvas.height/2;
+			var Fx=(b.x-Game.system.bodies[Render.focusID].x)*Render.scale+Render.canvas.width/2;
+			var Fy=Render.canvas.height/2;
 		}
+		//--//-/--/----/-/-///-;;-;-;
 		if (b.type=='Planetoid' || b.type=='Asteroid' || b.type=='Moon' || b.type=='Planet' || b.type=='GasGiant' || b.type=='Star'){
 			Render.context.beginPath();
 			Render.context.fillStyle='rgba('+b.color[0]+','+b.color[1]+','+b.color[2]+','+b.color[3]+')';

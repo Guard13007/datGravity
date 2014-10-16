@@ -1,3 +1,5 @@
+# Node.js modules if installed locally
+node_modules/
 # custom shit
 doNotCommit/*
 
